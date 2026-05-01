@@ -8,6 +8,7 @@
   const TAG_TO_GROUP = {};
   const FACTION_BY_ID = {};
   const DISTRICT_BY_ID = {};
+  const FACTIONS_BY_DISTRICT_ID = {};
   let ALL_DISTRICT_IDS = [];
   let ALL_TIERS = [];
   let lastViewKey = null;
@@ -27,8 +28,13 @@
     }
 
     DATA.factions.forEach(f => {
-      f.districts = expandDistricts(f.districts || []);
+      const raw = f.districts || [];
+      f.isCitywide = raw.includes("*");
+      f.districts = expandDistricts(raw);
       FACTION_BY_ID[f.id] = f;
+      for (const did of f.districts) {
+        (FACTIONS_BY_DISTRICT_ID[did] = FACTIONS_BY_DISTRICT_ID[did] || []).push(f);
+      }
     });
 
     ALL_TIERS = [...new Set(DATA.factions.map(f => f.tier).filter(t => t != null))]
@@ -207,6 +213,21 @@
   function replaceAndRoute(href) {
     history.replaceState(null, "", href);
     route();
+  }
+
+  // History-aware back link. If the user has history to go back to (the
+  // common case — they came from a list or another detail page), use that.
+  // Otherwise (deep-link / refresh) fall through to the fallback href.
+  function backLink(fallbackHref, label) {
+    const a = el("a", { cls: "back-link", href: fallbackHref, text: "← " + label });
+    a.addEventListener("click", e => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      if (history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    });
+    return a;
   }
 
   function plainResultRow(f, matchingTags) {
@@ -388,7 +409,7 @@
     const app = document.getElementById("app");
     app.innerHTML = "";
 
-    app.appendChild(el("a", { cls: "back-link", href: "#/", text: "← Back" }));
+    app.appendChild(backLink("#/", "Back"));
 
     const f = FACTION_BY_ID[id];
     if (!f) {
@@ -439,6 +460,24 @@
       sec.appendChild(tagRow("Other", other));
     }
     app.appendChild(sec);
+
+    // Post-mount: any row whose chips wrapped below the label gets a class
+    // that promotes the label to its own line. Reads offsetTop, which forces
+    // synchronous layout — fine on a page this small.
+    for (const row of sec.querySelectorAll(".tag-group")) applyTagGroupWrap(row);
+  }
+
+  function applyTagGroupWrap(rowEl) {
+    const label = rowEl.querySelector(".tag-group-label");
+    if (!label) return;
+    rowEl.classList.remove("tag-group-wrap");
+    const labelTop = label.offsetTop;
+    for (const c of rowEl.querySelectorAll(".tag")) {
+      if (c.offsetTop > labelTop) {
+        rowEl.classList.add("tag-group-wrap");
+        return;
+      }
+    }
   }
 
   function tagRow(label, items) {
@@ -461,8 +500,14 @@
     const sec = el("section", { cls: "section" });
     sec.appendChild(el("h3", { cls: "section-h", text: "Districts" }));
     if (f.districts && f.districts.length) {
-      const names = f.districts.map(id => (DISTRICT_BY_ID[id] && DISTRICT_BY_ID[id].name) || id);
-      sec.appendChild(el("p", { text: names.join(", ") }));
+      const wrap = el("div", { cls: "related" });
+      for (const id of f.districts) {
+        const d = DISTRICT_BY_ID[id];
+        const a = el("a", { cls: "related-link", href: "#/district/" + id });
+        a.appendChild(el("span", { cls: "related-name", text: d ? d.name : id }));
+        wrap.appendChild(a);
+      }
+      sec.appendChild(wrap);
     } else {
       sec.appendChild(el("p", { cls: "muted", text: "No fixed turf." }));
     }
@@ -515,11 +560,119 @@
     app.appendChild(sec);
   }
 
+  // ---------- District views ----------
+
+  function renderDistrictList() {
+    const app = document.getElementById("app");
+    app.innerHTML = "";
+
+    const sorted = DATA.districts.slice().sort(compareByName);
+    const list = el("ul", { cls: "results" });
+    for (const d of sorted) {
+      const link = el("a", { cls: "result", href: "#/district/" + d.id });
+      const row = el("div", { cls: "result-row" });
+      row.appendChild(el("span", { cls: "result-name", text: d.name }));
+      const count = (FACTIONS_BY_DISTRICT_ID[d.id] || []).length;
+      row.appendChild(el("span", {
+        cls: "result-meta",
+        text: count + " " + (count === 1 ? "faction" : "factions")
+      }));
+      link.appendChild(row);
+      if (d.summary) link.appendChild(el("span", { cls: "result-summary", text: d.summary }));
+      const li = el("li");
+      li.appendChild(link);
+      list.appendChild(li);
+    }
+    app.appendChild(list);
+  }
+
+  function renderDistrict(id) {
+    const app = document.getElementById("app");
+    app.innerHTML = "";
+
+    app.appendChild(backLink("#/districts", "Districts"));
+
+    const d = DISTRICT_BY_ID[id];
+    if (!d) {
+      app.appendChild(el("div", { cls: "error", text: "District not found: " + id }));
+      return;
+    }
+
+    const header = el("div", { cls: "faction-header" });
+    header.appendChild(el("h2", { cls: "faction-name", text: d.name }));
+    app.appendChild(header);
+
+    if (d.summary) app.appendChild(el("p", { cls: "faction-summary", text: d.summary }));
+
+    // Security / wealth — render only if authored.
+    if (d.security != null || d.wealth != null) {
+      const sec = el("section", { cls: "section" });
+      sec.appendChild(el("h3", { cls: "section-h", text: "Indicators" }));
+      const parts = [];
+      if (d.security != null) parts.push("Security: " + d.security);
+      if (d.wealth != null) parts.push("Wealth: " + d.wealth);
+      sec.appendChild(el("p", { text: parts.join(" · ") }));
+      app.appendChild(sec);
+    }
+
+    if (d.notable_locations && d.notable_locations.length) {
+      const sec = el("section", { cls: "section" });
+      sec.appendChild(el("h3", { cls: "section-h", text: "Notable locations" }));
+      sec.appendChild(el("p", { text: d.notable_locations.join(", ") }));
+      app.appendChild(sec);
+    }
+
+    if (d.notes) {
+      const sec = el("section", { cls: "section" });
+      sec.appendChild(el("h3", { cls: "section-h", text: "Notes" }));
+      sec.appendChild(el("p", { text: d.notes }));
+      app.appendChild(sec);
+    }
+
+    const sortFactions = arr => arr.slice().sort(
+      (a, b) => (b.tier || 0) - (a.tier || 0) || compareByName(a, b)
+    );
+    const all = FACTIONS_BY_DISTRICT_ID[id] || [];
+    const specific = sortFactions(all.filter(f => !f.isCitywide));
+    const citywide = sortFactions(all.filter(f => f.isCitywide));
+
+    const specSec = el("section", { cls: "section" });
+    specSec.appendChild(el("h3", {
+      cls: "section-h",
+      text: "Factions operating here (" + specific.length + ")"
+    }));
+    if (!specific.length) {
+      specSec.appendChild(el("p", {
+        cls: "muted",
+        text: "No factions specifically claim turf here."
+      }));
+    } else {
+      const ul = el("ul", { cls: "results" });
+      for (const f of specific) ul.appendChild(plainResultRow(f, null));
+      specSec.appendChild(ul);
+    }
+    app.appendChild(specSec);
+
+    if (citywide.length) {
+      const det = el("details", { cls: "section section-collapsible" });
+      const sum = el("summary", {
+        cls: "section-h section-h-toggle",
+        text: "Citywide factions also present (" + citywide.length + ")"
+      });
+      det.appendChild(sum);
+      const ul = el("ul", { cls: "results" });
+      for (const f of citywide) ul.appendChild(plainResultRow(f, null));
+      det.appendChild(ul);
+      app.appendChild(det);
+    }
+  }
+
   // ---------- Routing & nav ----------
 
   function viewKeyFromHash(hash) {
     if (hash.startsWith("#/faction/")) return "faction";
     if (hash === "#/tags" || hash.startsWith("#/tags/") || hash.startsWith("#/tags?")) return "tags";
+    if (hash === "#/districts" || hash.startsWith("#/district/")) return "districts";
     return "name";
   }
 
@@ -537,16 +690,22 @@
     let m;
     if ((m = hash.match(/^#\/faction\/(.+)$/))) {
       renderFaction(decodeURIComponent(m[1]));
+    } else if ((m = hash.match(/^#\/district\/(.+)$/))) {
+      renderDistrict(decodeURIComponent(m[1]));
+    } else if (hash === "#/districts") {
+      renderDistrictList();
     } else if (hash === "#/tags" || hash.startsWith("#/tags/") || hash.startsWith("#/tags?")) {
       renderTags(parseBrowseHash(hash.slice("#/tags".length)));
     } else {
       renderSearch();
     }
 
-    // Scroll to top on view change or any new faction page.
-    if (viewKey === "faction" || viewKey !== lastViewKey) window.scrollTo(0, 0);
+    // Scroll to top on view change or whenever we land on a new detail page.
+    const isDetail = viewKey === "faction" || hash.startsWith("#/district/");
+    if (isDetail || viewKey !== lastViewKey) window.scrollTo(0, 0);
     lastViewKey = viewKey;
 
+    // Faction detail isn't tied to a tab; everything else highlights its tab.
     updateNav(viewKey === "faction" ? null : viewKey);
   }
 
@@ -555,6 +714,11 @@
   load()
     .then(() => {
       window.addEventListener("hashchange", route);
+      // Re-evaluate tag-group wrap on viewport changes (rotate, devtools resize).
+      // No-op when not currently on a faction page (selector finds nothing).
+      window.addEventListener("resize", () => {
+        for (const row of document.querySelectorAll(".tag-group")) applyTagGroupWrap(row);
+      });
       route();
     })
     .catch(err => {
