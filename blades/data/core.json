@@ -1,0 +1,986 @@
+{
+  "tags": {
+    "Domain": [
+      "Law",
+      "Criminal",
+      "Noble",
+      "Labor",
+      "Religious",
+      "Military",
+      "Academic",
+      "Government",
+      "Foreign",
+      "Spirit"
+    ],
+    "Trade": [
+      "Occult",
+      "Drugs",
+      "Weapons",
+      "Luxury",
+      "Information",
+      "Vice",
+      "Food",
+      "Transport",
+      "Industry",
+      "Smuggling",
+      "Spirit Trade"
+    ],
+    "Wealth": [
+      "Rich",
+      "Modest",
+      "Poor"
+    ],
+    "Legality": [
+      "Legal",
+      "Illegal",
+      "Grey"
+    ],
+    "Services": [
+      "Muscle",
+      "Assassination",
+      "Sorcery",
+      "Politics",
+      "Investigation"
+    ]
+  },
+
+  "districts": [
+    {
+      "id": "barrowcleft",
+      "name": "Barrowcleft",
+      "summary": "Residences and markets for the farmers who work the radiant-energy fields and eeleries.",
+      "notes": "Barrowcleft is the home to the laborers and overseers of the Ministry of Preservation who attend the radiant energy farms of Doskvol. A dusty, rural district with simple wooden buildings and wide dirt roads. Tight-knit family-based clans hold themselves apart from the city folk across the river.",
+      "notable_locations": ["Barrow Bridge", "Lightning Tower", "Barrowcleft Market", "Radiant Energy Farm"]
+    },
+    {
+      "id": "brightstone",
+      "name": "Brightstone",
+      "summary": "The grand mansions and luxury shops of the wealthy elite.",
+      "notes": "Home to many of the wealthiest and most influential citizens of Doskvol. Broad paved streets under bright electric lights, sparkling perfumed canals, fine marble houses with rich timbers and intricate ironworks. Lavish restaurants, jewelers, tailors. Heavy Bluecoat patrols.",
+      "notable_locations": ["Unity Park", "Silver Market", "The Sanctorium", "Bowmore Bridge"]
+    },
+    {
+      "id": "charhollow",
+      "name": "Charhollow",
+      "summary": "A crowded district of tenements and stacked houses, home to the city's working class.",
+      "notes": "Cheap, noisy, cramped, and sweltering from cookfires and hissing steam-pipes. Servants, dockers, sailors, stockyard and eelery workers, cabbies. There's a familial camaraderie among its residents — a true community bound by mutual support, in stark contrast to the rest of the city.",
+      "notable_locations": ["The Sheets"]
+    },
+    {
+      "id": "charterhall",
+      "name": "Charterhall",
+      "summary": "The city's civic offices and the hub for shops, artisans, and commerce.",
+      "notes": "Site of the first major construction in the city, before the cataclysm. Home to civic offices: courts, licensing and taxation, banks, records archives. City officials, students at Charterhall University, and captains of Imperial industry live here.",
+      "notable_locations": ["Charterhall University", "City Council Chambers", "Gaddoc Rail Station"]
+    },
+    {
+      "id": "coalridge",
+      "name": "Coalridge",
+      "summary": "Industrial laborers and factories, cramped and soot-choked.",
+      "notes": "Home to most of the machinists, industrial laborers, and factories of the city. Cramped, soot-choked, and loud, spewing dense clouds of black smoke. The old elevated train lines now carry heavy equipment and raw materials to and from Gaddoc Station.",
+      "notable_locations": ["Coalridge Mine", "Sparkwrights Workshop"]
+    },
+    {
+      "id": "crows-foot",
+      "name": "Crow's Foot",
+      "summary": "A cramped neighborhood of multi-level streets, ruled by gangs.",
+      "notes": "A crossroads merging qualities of its neighbors: the illicit vices of Silkshore, the labor of the Docks, the poverty of Charhollow, and the architecture of Charterhall. A patchwork held together — and threatened apart — by a menagerie of competing street gangs and Bluecoat squads warring for every avenue.",
+      "notable_locations": ["Crow's Nest"]
+    },
+    {
+      "id": "the-docks",
+      "name": "The Docks",
+      "summary": "Rough taverns, tattoo parlors, fighting pits, and warehouses.",
+      "notes": "Ancient, going back to the days before the cataclysm, when the area was a colony town of the old Skov kingdom. Today bustling with cargo haulers, fishing boats, and the prestigious leviathan hunter ships that provide the raw material that keeps the city running.",
+      "notable_locations": ["The North Hook Company", "Leviathan Hunter Docks"]
+    },
+    {
+      "id": "dunslough",
+      "name": "Dunslough",
+      "summary": "A labor camp served by convicts and a ghetto for the destitute poor.",
+      "notes": "Originally a neighborhood for families of prisoners; now extreme poverty and neglect have worn it down into a sodden ruin. A vicious cycle: crime, arrest, incarceration, release back to Dunslough — Ironhook's endless supply of laborers.",
+      "notable_locations": ["Ironhook Prison", "Ironhook Labor Camp"]
+    },
+    {
+      "id": "nightmarket",
+      "name": "Nightmarket",
+      "summary": "The trade center for exotic goods imported by rail. Many vendors trade in illicit goods.",
+      "notes": "Dominated by commerce. Situated near Gaddoc Rail Station, Nightmarket receives the bulk of salable goods from the cargo trains across the Imperium. Home to a new class of non-noble elites — wealthy without titles. Lavish private townhouses with all modern advances.",
+      "notable_locations": ["The Veil"]
+    },
+    {
+      "id": "silkshore",
+      "name": "Silkshore",
+      "summary": "The 'red lamp district' and artist community, best navigated by gondola.",
+      "notes": "Criss-crossed by dozens of narrow canals. Brothels, vice dens, food stalls, and exotic shops perch at the waterside, ready to satisfy every appetite. A place of public indulgence and private indelicacy, catering to every pleasure imaginable.",
+      "notable_locations": ["The Spark Grounds"]
+    },
+    {
+      "id": "six-towers",
+      "name": "Six Towers",
+      "summary": "A formerly rich district, now worn down and dilapidated.",
+      "notes": "Faded over centuries from its former prestige. The eponymous six towers were originally the grand residences of Doskvol's first noble families; all but two have been sold off or fallen into ruin. An empty, haunted feel; sprawling old buildings dark without power; fires of squatters in overgrown lots.",
+      "notable_locations": ["Rowan House", "Bowmore House", "Mistshore Park", "Scurlock Manor", "Arms of the Weeping Lady", "Centuralia Club"]
+    },
+    {
+      "id": "whitecrown",
+      "name": "Whitecrown",
+      "summary": "The sprawling estates of the Lord Governor, Hunter Commander, Master Warden, and Doskvol Academy.",
+      "notes": "Sits atop a grand peak on the island across North Hook channel from the city proper. The Lord Governor's stronghold oversees all, flanked by grand estates of the most powerful nobility and the extravagantly appointed Doskvol Academy. A rich and rarefied world unto itself.",
+      "notable_locations": ["Lord Governor's Stronghold", "Doskvol Academy", "Master Warden's Estate", "North Hook Lighthouse"]
+    }
+  ],
+
+  "factions": [
+    {
+      "id": "the-billhooks",
+      "name": "The Billhooks",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["crows-foot", "the-docks"],
+      "tags": { "Criminal": 5, "Muscle": 5, "Illegal": 5, "Vice": 2, "Poor": 2 },
+      "allies": ["bluecoats", "ministry-of-preservation"],
+      "enemies": ["ulf-ironborn", "the-lost"],
+      "npcs": [
+        { "name": "Tarvul", "role": "Leader (serving life in prison; savage, arrogant, family man)" },
+        { "name": "Erin", "role": "Captain — Tarvul's sister (confident, deadly, ambitious)" },
+        { "name": "Coran", "role": "Thug — Tarvul's son (fierce, loyal, quiet)" }
+      ],
+      "summary": "A tough gang of thugs who prefer hatchets, meat hooks, and pole arms.",
+      "turf": "A butcher shop (HQ), stockyard, and slaughterhouse. Animal fighting pits and gambling dens. Several terrified merchants and businesses, which they extort.",
+      "assets": "A large gang of bloodthirsty butchers. A pack of death-dogs.",
+      "quirks": "The Billhooks have a bloody reputation, often leaving the butchered corpses of their victims strewn about in a grisly display. Many wonder why the Bluecoats turn a blind eye to their savagery.",
+      "situation": "Erin and Coran both want to take control of the Billhooks gang, either when Tarvul gets too old or by taking the position by force. Meanwhile, the rest of the gang wants to continue their reign of terror to pressure a magistrate to pardon Tarvul and other gang members from Ironhook.",
+      "clocks": [{ "name": "Terrorize magistrates to pardon members in prison", "size": 8 }]
+    },
+    {
+      "id": "bluecoats",
+      "name": "Bluecoats",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["*"],
+      "tags": { "Law": 5, "Muscle": 4, "Legal": 5, "Government": 2, "Investigation": 2, "Modest": 2 },
+      "allies": ["city-council", "the-billhooks", "the-crows", "ironhook-prison", "lord-scurlock", "the-unseen"],
+      "enemies": ["imperial-military"],
+      "npcs": [
+        { "name": "Commander Clelland", "role": "Chief commissioner (corrupt, cruel, arrogant)" },
+        { "name": "Captain Michter", "role": "Chief instructor (ambitious, fierce, confident)" },
+        { "name": "Captain Vale", "role": "Quartermaster (loyal, insightful, quiet)" }
+      ],
+      "summary": "The City Watch of Duskwall. Known as the meanest gang in the city. Corrupt, violent, and cruel.",
+      "turf": "The Bluecoats claim the whole city as their turf, but find their influence severely limited in Whitecrown, where the Imperial Military garrison holds sway under command of the Lord Governor.",
+      "assets": "Many large gangs of vicious thugs in uniform. Armored coaches and canal patrol boats. Public punishment sites (pillories, stocks, hanging cages).",
+      "quirks": "The Bluecoats are divided into companies by district, and they have fierce rivalries, encouraged by their superiors — often good-natured, but sometimes violent.",
+      "situation": "The Bluecoats have become jealous of the elite hardware and vehicles used by the Imperial Military. They want to refit their watch-guards in heavy armor and weapons, to better strike fear into those they prey upon.",
+      "clocks": [{ "name": "Procure bigger budget, military arms & equipment", "size": 8 }]
+    },
+    {
+      "id": "the-brigade",
+      "name": "The Brigade",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["*"],
+      "tags": { "Government": 3, "Criminal": 2, "Muscle": 2, "Grey": 4, "Modest": 2 },
+      "allies": [],
+      "enemies": [],
+      "npcs": [],
+      "summary": "The fire-fighters of the city. Beloved for their life-saving heroism, or reviled for their looting and extortion rackets. Also known as 'Sallies' (from 'salamanders,' their ancient name).",
+      "notes": "Index-only entry — no detailed write-up in the rulebook."
+    },
+    {
+      "id": "cabbies",
+      "name": "Cabbies",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["*"],
+      "tags": { "Labor": 4, "Transport": 5, "Information": 3, "Legal": 4, "Modest": 2 },
+      "allies": [],
+      "enemies": [],
+      "npcs": [],
+      "summary": "The public coach operators. They also breed the large Akorosian goats used to pull the carriages. An impressive gossip network."
+    },
+    {
+      "id": "the-church-of-ecstasy",
+      "name": "The Church of the Ecstasy of the Flesh",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["brightstone"],
+      "tags": { "Religious": 5, "Occult": 4, "Rich": 4, "Legal": 4, "Sorcery": 3, "Politics": 3, "Noble": 2 },
+      "allies": ["city-council", "leviathan-hunters", "spirit-wardens"],
+      "enemies": ["the-path-of-echoes", "the-reconciled"],
+      "npcs": [
+        { "name": "Elder Rowan", "role": "Leader (devout, resolute, visionary)" },
+        { "name": "Preceptor Dunvil", "role": "Arcane researcher (unorthodox, obsessive, enigmatic)" }
+      ],
+      "summary": "The 'state religion' honors the life of the body and abhors the corrupted spirit world. Essentially a secret society.",
+      "turf": "The Sanctorium grand cathedral in Brightstone. Many other smaller temples across the city.",
+      "assets": "A large treasury of tithes from citizens. Extensive arcane and occult libraries, workspaces, and artifacts. Many cohorts of acolytes and hollows who enforce the will of the Church's leadership.",
+      "quirks": "Zealous believers volunteer to be hollowed to 'become purified.' This was once common among the ancient cult of the Empty Vessel, which preceded the Church.",
+      "situation": "The purest beings (according to secret teachings of the Church) are those entirely without spirits: the demons. The most devout of the Church seek to become as they are, to unlock the secret of ascension. Many dark experiments and rituals with hulls, hollows, vampires — and the rare demon — are conducted in the labyrinthine dungeons below the Sanctorium.",
+      "clocks": [
+        { "name": "Unlock the secret of ascension", "size": 12 },
+        { "name": "Eliminate the Reconciled", "size": 12 }
+      ]
+    },
+    {
+      "id": "the-circle-of-flame",
+      "name": "The Circle of Flame",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["six-towers"],
+      "tags": { "Noble": 4, "Criminal": 3, "Occult": 4, "Vice": 3, "Information": 4, "Luxury": 3, "Politics": 4, "Rich": 5, "Grey": 4 },
+      "allies": ["the-forgotten-gods", "the-path-of-echoes", "city-council", "the-foundation"],
+      "enemies": ["the-hive", "the-silver-nails"],
+      "npcs": [
+        { "name": "Elstera Avrathi", "role": "The Seven — Iruvian diplomat (secretive, gracious)" },
+        { "name": "Lady Drake", "role": "The Seven — magistrate (cunning, ruthless)" },
+        { "name": "Raffello", "role": "The Seven — painter (visionary, obsessive)" },
+        { "name": "Lord Mora", "role": "The Seven — noble (cold, suspicious)" },
+        { "name": "Lady Penderyn", "role": "The Seven — noble (charming, patient)" },
+        { "name": "Madame Tesslyn", "role": "The Seven — vice purveyor (sophisticated, subtle)" },
+        { "name": "Harvale Brogan", "role": "The Seven — vice purveyor (shrewd, quiet)" }
+      ],
+      "summary": "A refined secret society of antiquarians and scholars; cover for extortion, graft, vice, and murder.",
+      "turf": "The Centuralia club, Six Towers (HQ).",
+      "assets": "Vast treasury provided by wealthy membership. Impressive collection of ancient artifacts, maps, and ephemera. Highly trained and discreet private security force.",
+      "quirks": "One of The Seven is actually a demon in disguise.",
+      "situation": "The Circle has an extensive library of scholarly works that catalog many of the arcane artifacts and valuable treasures that disappeared when the Lost District was abandoned. Of special interest are the remains of Kotar — a legendary sorcerer, demon, or hero. The Eye, Hand, and Heart of Kotar are said to possess great power.",
+      "clocks": [{ "name": "Acquire all the ancient artifacts of Kotar", "size": 8 }]
+    },
+    {
+      "id": "city-council",
+      "name": "City Council",
+      "tier": 5,
+      "hold": "strong",
+      "districts": ["charterhall"],
+      "tags": { "Noble": 5, "Government": 5, "Politics": 5, "Rich": 5, "Legal": 5 },
+      "allies": ["bluecoats", "the-church-of-ecstasy", "the-circle-of-flame", "lord-scurlock", "the-brigade", "cabbies", "sparkwrights", "the-foundation"],
+      "enemies": ["imperial-military", "inspectors", "ministry-of-preservation", "the-reconciled"],
+      "npcs": [
+        { "name": "Bowmore", "role": "Council scion" },
+        { "name": "Clelland", "role": "Council scion" },
+        { "name": "Dunvil", "role": "Council scion" },
+        { "name": "Penderyn", "role": "Council scion" },
+        { "name": "Rowan", "role": "Council scion" },
+        { "name": "Strangford", "role": "Council scion" }
+      ],
+      "summary": "The elite nobility who run the city government, its treasury, magistrates, and public works.",
+      "turf": "City council chambers in Charterhall, attendant government offices, and impregnable city treasury vaults. Owns all public spaces — streets, docks, waterways.",
+      "assets": "A massive treasury of coin and valuable goods. Many officials, barristers, clerks. The public coaches operated by the Cabbies.",
+      "quirks": "All councilors are high-ranking adepts in the Church of the Ecstasy of the Flesh. Some are also secretly initiates in the Path of Echoes.",
+      "situation": "Three councilors (Bowmore, Clelland, Rowan) have aligned against Strangford and are maneuvering to remove the house from the council. Dunvil and Penderyn have not taken sides. Will the conspirators arrange for the necessary scandal, framed crime, or assassinations? Or can Strangford House stand against them and eliminate the threats?",
+      "clocks": [
+        { "name": "Strangford is removed from council", "size": 6 },
+        { "name": "Strangford eliminates threats", "size": 8 }
+      ]
+    },
+    {
+      "id": "the-crows",
+      "name": "The Crows",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["crows-foot", "the-docks"],
+      "tags": { "Criminal": 5, "Vice": 4, "Muscle": 4, "Illegal": 5, "Modest": 2 },
+      "allies": ["bluecoats", "sailors", "the-lost"],
+      "enemies": ["the-hive", "inspectors", "dockers"],
+      "npcs": [
+        { "name": "Lyssa", "role": "Leader (brash, killer, noble family)" },
+        { "name": "Bell", "role": "Second-in-command (loyal)" }
+      ],
+      "summary": "An old gang with new leadership. Known for running illegal games of chance and extortion rackets.",
+      "turf": "Claims all of Crow's Foot as their turf. HQ in an abandoned City Watch tower. Operates gambling dens in Crow's Foot and extortion rackets at the Docks.",
+      "assets": "A veteran gang of thugs and killers. A number of small boats. A fortified HQ.",
+      "quirks": "Roric's body was lost during his murder (it fell into a canal). His vengeful ghost is now at large in the city.",
+      "situation": "Lyssa murdered the former boss of the Crows, Roric. She is a fearsome killer, but her position as leader is uncertain. Some were very loyal to Roric. As the power-play continues, the Crows' hold on the district just might slip away.",
+      "clocks": [
+        { "name": "Reestablish control of Crow's Foot", "size": 6 },
+        { "name": "Rise in Tier", "size": 6 }
+      ]
+    },
+    {
+      "id": "cyphers",
+      "name": "Cyphers",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["*"],
+      "tags": { "Labor": 4, "Information": 4, "Transport": 3, "Legal": 4, "Modest": 2 },
+      "allies": ["the-unseen"],
+      "enemies": [],
+      "npcs": [],
+      "summary": "The messenger guild of the city. Cyphers swear sacred oaths of secrecy — never revealing the contents of their messages or the identities of their clients — or so they claim."
+    },
+    {
+      "id": "dagger-isles-consulate",
+      "name": "Dagger Isles Consulate",
+      "tier": 1,
+      "hold": "strong",
+      "districts": ["charterhall"],
+      "tags": { "Foreign": 5, "Government": 3, "Politics": 2, "Smuggling": 2, "Legal": 4, "Modest": 3 },
+      "allies": ["the-hive"],
+      "enemies": [],
+      "npcs": [],
+      "summary": "Diplomatic mission of the Dagger Isles in Doskvol."
+    },
+    {
+      "id": "deathlands-scavengers",
+      "name": "Deathlands Scavengers",
+      "tier": 2,
+      "hold": "weak",
+      "districts": [],
+      "tags": { "Criminal": 2, "Occult": 3, "Sorcery": 2, "Poor": 3, "Grey": 3, "Foreign": 2 },
+      "allies": ["the-forgotten-gods", "gondoliers", "spirit-wardens"],
+      "enemies": ["ironhook-prison"],
+      "npcs": [
+        { "name": "Lady Thorn", "role": "Leader (haunted, brave, caring)" },
+        { "name": "Richter", "role": "Hunter (patient, quiet, deadly)" }
+      ],
+      "summary": "Convicts from Ironhook and desperate freelancers who roam the wasteland beyond the lightning barriers.",
+      "turf": "A few precious hold-fasts in the deathlands, secured by ancient rites against spirits. Hunting grounds to feed on the few strange animals that survived the cataclysm.",
+      "assets": "Generators, lightning hooks, gas-masks, air tanks, and other essentials of deathlands survival. A secret ancient book of ritual sorcery.",
+      "quirks": "Possession is a common hazard, and scavengers either learn to deal with it, or go mad and vanish into the darkness of the wastes. Lady Thorn's company has adapted well.",
+      "situation": "Condemned prisoners are sometimes given 'mercy' and sent into the deathlands rather than executed at Ironhook. A few survive thanks to Lady Thorn, who trains them in the ways of deathlands hunting and survival. The scavengers hunt for lost artifacts and treasures, sometimes for enough to buy a pardon.",
+      "clocks": [{ "name": "Obtain pardons (repeating)", "size": 8 }],
+      "notes": "Operates outside the lightning barriers — no in-city district turf."
+    },
+    {
+      "id": "the-dimmer-sisters",
+      "name": "The Dimmer Sisters",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["silkshore"],
+      "tags": { "Criminal": 3, "Occult": 4, "Spirit Trade": 5, "Sorcery": 5, "Illegal": 4, "Modest": 3 },
+      "allies": ["the-forgotten-gods", "the-foundation"],
+      "enemies": ["spirit-wardens", "the-reconciled"],
+      "npcs": [
+        { "name": "Roslyn", "role": "Servant (patient, loyal, arcane); deals with outside contacts" },
+        { "name": "Irelen", "role": "Spark-craft tinkerer (loyal, enigmatic, obsessive)" }
+      ],
+      "summary": "House-bound recluses with an occult reputation.",
+      "turf": "Fine old manor house and grounds (HQ), as well as the ancient temple ruin and subterranean canal beneath. Apothecaries and witches in their service.",
+      "assets": "A private electroplasmic generator, lightning barriers, and spirit containment vessels. Many spirits bound to service.",
+      "quirks": "The precise number of sisters is unknown. Some say they are an ancient family of possessing spirits. Others say they are vampires. Everyone knows that if you go into their house, you never come out again.",
+      "situation": "The Sisters have been slowly and secretly consolidating the trade of captured spirits and spirit essences in Doskvol for several decades. Only a few rivals stand between them and domination of the market.",
+      "clocks": [
+        { "name": "Dominate the spirit trade", "size": 6 },
+        { "name": "Obtain arcane secrets (repeating)", "size": 4 }
+      ]
+    },
+    {
+      "id": "dockers",
+      "name": "Dockers",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["the-docks", "charhollow"],
+      "tags": { "Labor": 5, "Industry": 2, "Transport": 2, "Muscle": 2, "Legal": 4, "Poor": 2 },
+      "allies": ["the-fog-hounds", "the-grinders", "the-red-sashes", "leviathan-hunters"],
+      "enemies": ["the-crows"],
+      "npcs": [],
+      "summary": "The hard-bitten laborers who work the docks."
+    },
+    {
+      "id": "the-fog-hounds",
+      "name": "The Fog Hounds",
+      "tier": 1,
+      "hold": "weak",
+      "districts": ["the-docks"],
+      "tags": { "Criminal": 4, "Smuggling": 5, "Transport": 3, "Illegal": 5, "Poor": 2 },
+      "allies": ["dockers", "the-lampblacks"],
+      "enemies": ["bluecoats"],
+      "npcs": [
+        { "name": "Margette Vale", "role": "Leader (quiet, cold, fearless)" },
+        { "name": "Bear", "role": "Second (fierce, moody, brash)" },
+        { "name": "Goldie", "role": "Navigator (calculating, patient, confident)" }
+      ],
+      "summary": "A crew of rough smugglers looking for a patron.",
+      "turf": "Underground canal dock (HQ). North and East city canal routes. Northern Void Sea routes. Old North Port supply caches.",
+      "assets": "Medium steamship, Fog Hound. A crew of hard-bitten, tough, expert sailors — all former Void Sea transport haulers. A wide array of Imperial transport and cargo documents, some forged, some legit.",
+      "quirks": "As veterans of many cruises on the Void Sea, Vale and her crew can be insular and clannish, with low initial opinions of outsiders. Once won, however, their loyalty is rock solid and fierce.",
+      "situation": "Vale and her crew have mastered the Northern smuggling routes in and out of Duskwall. They're absorbing or eliminating their few remaining rivals and seeking a steady patron who needs reliable contraband.",
+      "clocks": [
+        { "name": "Eliminate rival smugglers", "size": 8 },
+        { "name": "Obtain a regular patron", "size": 6 }
+      ]
+    },
+    {
+      "id": "the-forgotten-gods",
+      "name": "The Forgotten Gods",
+      "tier": 3,
+      "hold": "weak",
+      "districts": [],
+      "tags": { "Religious": 4, "Spirit": 3, "Occult": 5, "Sorcery": 4, "Illegal": 4, "Grey": 3, "Modest": 2 },
+      "allies": ["deathlands-scavengers", "the-circle-of-flame", "the-dimmer-sisters", "lord-scurlock", "the-unseen"],
+      "enemies": [],
+      "npcs": [],
+      "summary": "Cults that attempt to follow the old ways from before the cataclysm, doing the bidding of demons and darker things. There are many cults, who rarely organize together. An individual cult is usually Tier I or Tier II.",
+      "notes": "Scattered across the city; no single turf."
+    },
+    {
+      "id": "the-foundation",
+      "name": "The Foundation",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["*"],
+      "tags": { "Labor": 4, "Academic": 3, "Industry": 3, "Politics": 3, "Rich": 4, "Legal": 4, "Grey": 3, "Criminal": 2 },
+      "allies": ["city-council", "the-circle-of-flame", "the-dimmer-sisters"],
+      "enemies": ["sparkwrights"],
+      "npcs": [],
+      "summary": "The powerful ancient order of architects and builders. Many of their enemies have disappeared behind the brick and mortar of Doskvol."
+    },
+    {
+      "id": "gondoliers",
+      "name": "Gondoliers",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["silkshore", "the-docks", "crows-foot", "charhollow"],
+      "tags": { "Labor": 4, "Transport": 5, "Occult": 3, "Legal": 4, "Modest": 3, "Sorcery": 2 },
+      "allies": ["the-lampblacks", "deathlands-scavengers", "the-reconciled"],
+      "enemies": ["the-red-sashes", "spirit-wardens"],
+      "npcs": [
+        { "name": "Eisele", "role": "Leader (serene, knowledgeable, fearless)" },
+        { "name": "Griggs", "role": "Chief Whisper (strange, ruthless, haunted)" }
+      ],
+      "summary": "The canal boat operators. Venerated by ancient tradition. Said to know occult secrets (many things are submerged in the Dusk).",
+      "turf": "The canals of Doskvol. Even the Bluecoats' canal patrol pays respect to them.",
+      "assets": "Fleet of gondolas and other water-craft. Map of known spirit wells and arcane sites across the city. A dedicated cohort of Adepts.",
+      "quirks": "Initiation into the Gondoliers grants the Whisper's Compel special ability.",
+      "situation": "Killers have disposed of bodies in the canals for centuries; the vengeful ghosts that rise are a serious threat dealt with by the Gondoliers since ancient times. Beloved by most citizens, who prefer them to the ruthless Spirit Wardens. A sudden influx of ritually disfigured hollows dumped in the canals has sparked Gondolier investigation (the Spirit Wardens are pointedly ignoring the situation).",
+      "clocks": [
+        { "name": "Investigate desecrated hollows", "size": 8 },
+        { "name": "Destroy spirit wells (repeating)", "size": 4 }
+      ]
+    },
+    {
+      "id": "the-gray-cloaks",
+      "name": "The Gray Cloaks",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["six-towers"],
+      "tags": { "Criminal": 4, "Law": 2, "Muscle": 4, "Vice": 2, "Information": 2, "Illegal": 4, "Grey": 3, "Modest": 2 },
+      "allies": ["inspectors"],
+      "enemies": ["bluecoats", "leviathan-hunters"],
+      "npcs": [
+        { "name": "Nessa", "role": "Leader (scrupulous, daring)" },
+        { "name": "Hutch", "role": "Second (brash, fierce)" }
+      ],
+      "summary": "A crew of former Bluecoats turned to crime after being framed and expelled from the City Watch.",
+      "turf": "The basement of a burned-down City Watch station (HQ). Several apartments above a tobacconist in Six Towers. A pit-fighting arena and gambling den.",
+      "assets": "A sizeable gang of former Bluecoats turned enforcers. Old uniforms and badges, often used to pass as the City Watch.",
+      "situation": "All former Bluecoats framed for a crime committed by their station commander. They were skimming and taking bribes like everyone else, but they didn't burn down the station to destroy evidence in the case against Lord Strangford (Leviathan Hunters). Several inspectors know the truth but can't prove it — yet. Lord Strangford would pay well to have these loose ends removed permanently.",
+      "clocks": [
+        { "name": "Secure Six Towers as their turf", "size": 8 },
+        { "name": "Avenge their expulsion", "size": 8 }
+      ]
+    },
+    {
+      "id": "the-grinders",
+      "name": "The Grinders",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["the-docks", "coalridge"],
+      "tags": { "Criminal": 4, "Foreign": 4, "Labor": 3, "Muscle": 4, "Illegal": 5, "Poor": 3 },
+      "allies": ["ulf-ironborn", "dockers"],
+      "enemies": ["bluecoats", "imperial-military", "leviathan-hunters", "sailors", "the-silver-nails"],
+      "npcs": [
+        { "name": "Hutton", "role": "Leader (confident, volatile)" },
+        { "name": "Sercy", "role": "Second (crippled, defiant)" },
+        { "name": "Derret", "role": "Toughest gang member (huge, shrewd)" }
+      ],
+      "summary": "A vicious gang of former dockers and leviathan blood refinery workers from Skovlan.",
+      "turf": "Abandoned dock warehouse (HQ) and underground canal dock.",
+      "assets": "A few small canal boats. Wrecking tools and explosives.",
+      "quirks": "Many Grinders have been mutated by the toxic rain that plagues Lockport.",
+      "situation": "Lockport processes 90% of the demon blood siphoned by the leviathan hunter ships of Doskvol. The huge refineries have poisoned the city under toxic fumes and acid rain. A group of dockers and refinery workers have come to Doskvol to raise an army and seize a warship to destroy the Empire's refineries. To raise funds, they've turned to smash & grab looting and hijacking cargo barges.",
+      "clocks": [
+        { "name": "Raise a crew, steal a war ship", "size": 12 },
+        { "name": "Fill war treasury", "size": 12 }
+      ]
+    },
+    {
+      "id": "the-hive",
+      "name": "The Hive",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["charterhall", "nightmarket", "the-docks", "silkshore"],
+      "tags": { "Criminal": 3, "Labor": 2, "Smuggling": 5, "Luxury": 4, "Information": 3, "Rich": 5, "Grey": 5, "Muscle": 2 },
+      "allies": ["ministry-of-preservation", "dagger-isles-consulate"],
+      "enemies": ["the-circle-of-flame", "the-unseen", "the-crows", "the-wraiths"],
+      "npcs": [
+        { "name": "Djera Maha", "role": "Leader (bold, strategic, confident)" },
+        { "name": "Karth Orris", "role": "Mercenary commander (ruthless, insightful, jealous)" }
+      ],
+      "summary": "A guild of legitimate merchants who secretly trade in contraband. Named for their symbol, a golden bee.",
+      "turf": "Many shops, taverns, cafes, warehouses, and other mercantile establishments all across the city. No centralized HQ.",
+      "assets": "A massive treasury. Elite mercenaries on retainer. A fleet of transport ships, carriages, wagons, and private trains.",
+      "quirks": "The Hive is known to avoid doing business with any occult or arcane groups. The Church of Ecstasy is popular among Hive members, who reject the superstitions of the past.",
+      "situation": "Djera Maha grew up an urchin in the Dagger Isles and learned the secrets of vice and smuggling working her way up the trade routes. With her acquisition and distribution network in the city (and within the Ministry of Preservation), she is poised to take over the contraband markets. Maha had a close relationship — some say romantic — with Roric, leader of the Crows, who was recently murdered by his second-in-command.",
+      "clocks": [
+        { "name": "Dominate contraband market", "size": 8 },
+        { "name": "Avenge Roric's murder", "size": 6 }
+      ]
+    },
+    {
+      "id": "the-horde",
+      "name": "The Horde",
+      "tier": 3,
+      "hold": "strong",
+      "districts": [],
+      "tags": { "Spirit": 3, "Occult": 3, "Muscle": 4, "Sorcery": 2, "Illegal": 4, "Poor": 2, "Criminal": 2 },
+      "allies": [],
+      "enemies": ["spirit-wardens", "bluecoats"],
+      "npcs": [],
+      "summary": "A mass of hollows, all united in some fell purpose, controlled by an unknown power.",
+      "notes": "No fixed turf — moves through the city as a roving threat."
+    },
+    {
+      "id": "imperial-military",
+      "name": "Imperial Military",
+      "tier": 6,
+      "hold": "strong",
+      "districts": ["whitecrown", "charterhall"],
+      "tags": { "Military": 5, "Government": 4, "Muscle": 5, "Rich": 4, "Legal": 5 },
+      "allies": ["ministry-of-preservation", "the-silver-nails"],
+      "enemies": ["bluecoats", "city-council", "the-grinders", "skovlander-refugees", "ulf-ironborn"],
+      "npcs": [],
+      "summary": "The armed forces of the Imperium stationed in Doskvol. Garrisons are posted at Gaddoc Rail Station, aboard the naval destroyer Paragon, and at the Lord Governor's stronghold (about 250 troops in total)."
+    },
+    {
+      "id": "ink-rakes",
+      "name": "Ink Rakes",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["charterhall"],
+      "tags": { "Labor": 3, "Information": 5, "Investigation": 4, "Politics": 3, "Legal": 4, "Modest": 2, "Grey": 2 },
+      "allies": [],
+      "enemies": ["the-unseen"],
+      "npcs": [],
+      "summary": "The journalists, muckrakers, and newspaper publishers of Doskvol."
+    },
+    {
+      "id": "inspectors",
+      "name": "Inspectors",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["*"],
+      "tags": { "Law": 5, "Government": 3, "Investigation": 5, "Legal": 5, "Modest": 3 },
+      "allies": ["the-gray-cloaks", "the-red-sashes"],
+      "enemies": ["city-council", "the-crows", "lord-scurlock", "the-wraiths"],
+      "npcs": [],
+      "summary": "The criminal investigators of the City Watch. They have a reputation for ethics and integrity (no one likes them). They present evidence for prosecutions to the city magistrates."
+    },
+    {
+      "id": "ironhook-prison",
+      "name": "Ironhook Prison",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["dunslough"],
+      "tags": { "Law": 4, "Government": 3, "Criminal": 3, "Muscle": 3, "Legal": 4, "Grey": 3, "Modest": 2 },
+      "allies": ["bluecoats", "the-lampblacks", "the-unseen"],
+      "enemies": ["deathlands-scavengers"],
+      "npcs": [],
+      "summary": "Where many scoundrels spend the bulk of their lives. Several criminal organizations are run by convicts inside its walls."
+    },
+    {
+      "id": "iruvian-consulate",
+      "name": "Iruvian Consulate",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["charterhall"],
+      "tags": { "Foreign": 5, "Government": 4, "Noble": 3, "Politics": 4, "Rich": 4, "Legal": 5 },
+      "allies": ["the-red-sashes"],
+      "enemies": [],
+      "npcs": [],
+      "summary": "Diplomatic mission of the Iruvian Empire in Doskvol."
+    },
+    {
+      "id": "laborers",
+      "name": "Laborers",
+      "tier": 3,
+      "hold": "weak",
+      "districts": ["charhollow", "coalridge", "the-docks", "barrowcleft"],
+      "tags": { "Labor": 5, "Industry": 3, "Poor": 3, "Legal": 4, "Modest": 1 },
+      "allies": ["the-lost"],
+      "enemies": [],
+      "npcs": [],
+      "summary": "The general workforce of the city — factory hands, eelery workers, mill operators, and field hands."
+    },
+    {
+      "id": "the-lampblacks",
+      "name": "The Lampblacks",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["crows-foot"],
+      "tags": { "Criminal": 5, "Vice": 4, "Drugs": 4, "Muscle": 4, "Illegal": 5, "Poor": 2, "Labor": 2 },
+      "allies": ["the-fog-hounds", "gondoliers", "ironhook-prison"],
+      "enemies": ["the-red-sashes", "bluecoats", "cabbies"],
+      "npcs": [
+        { "name": "Bazso Baz", "role": "Leader (charming, open, ruthless, whiskey connoisseur)" },
+        { "name": "Pickett", "role": "Second (shrewd, conniving, suspicious)" },
+        { "name": "Henner", "role": "Thug (loyal, reckless)" }
+      ],
+      "summary": "The former lamp-lighter guild, turned to crime when their services were replaced by electric lights.",
+      "turf": "HQ in the office of a coal warehouse. Operates a handful of brothels and cheap drug dens across Crow's Foot.",
+      "assets": "A fearsome gang of leg-breakers and mayhem-makers. A number of smugglers on the payroll who run their drugs.",
+      "quirks": "Bazso Baz is a member of a secret society (forgotten gods cult, 'The Empty Vessel') and sometimes puts the needs of that group ahead of the well-being of his gang.",
+      "situation": "The Lampblacks and the Red Sashes are at war over turf and vengeance for deaths on both sides. Bazso Baz is recruiting every free blade in the district. The Lampblacks are not particularly well-connected politically, but are akin to folk-heroes among the working class.",
+      "clocks": [
+        { "name": "Destroy the Red Sashes", "size": 8 },
+        { "name": "Become ward boss of Crow's Foot", "size": 8 }
+      ]
+    },
+    {
+      "id": "leviathan-hunters",
+      "name": "Leviathan Hunters",
+      "tier": 5,
+      "hold": "strong",
+      "districts": ["the-docks", "whitecrown"],
+      "tags": { "Noble": 4, "Industry": 4, "Occult": 2, "Rich": 5, "Legal": 5, "Sorcery": 2, "Spirit Trade": 2 },
+      "allies": ["city-council", "the-church-of-ecstasy", "sailors", "dockers", "sparkwrights"],
+      "enemies": ["the-grinders", "ministry-of-preservation", "the-path-of-echoes", "the-gray-cloaks"],
+      "npcs": [
+        { "name": "Lord Strangford", "role": "Captain (ruthless, arrogant, tainted)" },
+        { "name": "Lady Clave", "role": "Captain (daring, cruel, accomplished)" },
+        { "name": "Lady Ankhayat", "role": "Iruvian captain (confident, charming, scoundrel)" }
+      ],
+      "summary": "The captains and crews that grapple with titanic demons of the Void Sea to drain their blood for processing into electroplasm.",
+      "turf": "Massive metal docks for the huge hunter ships and associated construction and repair facilities. Several small private leviathan blood processing facilities for the captains' personal shares.",
+      "assets": "The leviathan hunter fleet (each vessel owned by the noble house that built and commands it). Many cohorts of expert sailors, spark-craft technicians, demonologist Whispers, void-touched navigators. Companies of marines.",
+      "situation": "The captains have a horrible secret: the known hunting grounds for leviathans are coming up barren. The immortal creatures, once so reliable in their movements, have begun to migrate elsewhere. New hunting grounds must be found before the surplus disappears, and with it, the lightning barriers and the survival of the human race.",
+      "clocks": [
+        { "name": "Discover new hunting grounds", "size": 12 },
+        { "name": "Surplus runs dry", "size": 12 }
+      ]
+    },
+    {
+      "id": "the-lost",
+      "name": "The Lost",
+      "tier": 1,
+      "hold": "weak",
+      "districts": ["coalridge", "dunslough"],
+      "tags": { "Criminal": 3, "Muscle": 4, "Illegal": 3, "Grey": 3, "Poor": 3 },
+      "allies": ["laborers", "the-crows"],
+      "enemies": ["bluecoats", "the-billhooks"],
+      "npcs": [
+        { "name": "Cortland", "role": "Leader (idealist, candid, cavalier)" }
+      ],
+      "summary": "A group of street-toughs and ex-soldiers dedicated to protecting the downtrodden and the hopeless.",
+      "turf": "Converted rail car (HQ). The poverty-stricken streets of Coalridge and Dunslough.",
+      "assets": "A very experienced gang of formerly vicious thugs, killers, and Imperial soldiers.",
+      "quirks": "All members have done horrible things in their former lives and believe they must atone for these 'sins.' Each keeps a pile of stones under their bed — one for each sin balanced with a just deed.",
+      "situation": "Currently focusing efforts in Coalridge, running a campaign of sabotage, terror, and savage beatings against the most cruel workhouse foremen. The local Bluecoat patrols are starting to complain to their commanders. Meanwhile, foremen are paying top dollar for anyone who'll take the Lost out of the picture.",
+      "clocks": [{ "name": "Destroy cruel workhouses (repeating)", "size": 4 }]
+    },
+    {
+      "id": "ministry-of-preservation",
+      "name": "Ministry of Preservation",
+      "tier": 5,
+      "hold": "strong",
+      "districts": ["barrowcleft", "charterhall", "coalridge"],
+      "tags": { "Government": 5, "Food": 5, "Transport": 5, "Politics": 4, "Rich": 5, "Legal": 5, "Noble": 2, "Muscle": 2 },
+      "allies": ["the-billhooks", "imperial-military", "rail-jacks", "sparkwrights", "the-hive"],
+      "enemies": ["leviathan-hunters", "city-council"],
+      "npcs": [
+        { "name": "Lord Dalmore", "role": "Executive officer in Doskvol (commanding, intelligent)" },
+        { "name": "Lady Slane", "role": "Chief of operations (insightful, subtle, effective)" },
+        { "name": "Captain Lannock", "role": "Mercenary commander (shrewd, ruthless)" }
+      ],
+      "summary": "The governmental body of the Imperium that oversees all transportation between cities and the disbursement of food and other vital resources.",
+      "turf": "The electro-rail train lines of the Imperium. Radiant energy farms, eeleries, and other food-growing enterprises throughout the city.",
+      "assets": "A fleet of cargo ships and their armed escorts. A significant treasury from taxation and transportation licensing. The Rail Jacks who work the train lines. A private mercenary company.",
+      "situation": "The Ministry leadership believes that the leviathan hunters are too vital to be controlled by bickering noble houses. Agents within the ministry have been tasked with espionage, sabotage, and political actions to ultimately seize control of the hunters and bring them into Ministry control.",
+      "clocks": [{ "name": "Seize control of Leviathan Hunters", "size": 12 }]
+    },
+    {
+      "id": "the-path-of-echoes",
+      "name": "The Path of Echoes",
+      "tier": 3,
+      "hold": "strong",
+      "districts": [],
+      "tags": { "Religious": 4, "Academic": 3, "Occult": 5, "Sorcery": 5, "Grey": 4, "Spirit": 2, "Modest": 3, "Illegal": 3 },
+      "allies": ["the-circle-of-flame", "the-red-sashes", "the-reconciled"],
+      "enemies": ["the-church-of-ecstasy", "leviathan-hunters", "spirit-wardens", "sparkwrights"],
+      "npcs": [],
+      "summary": "A mystery cult that borders on open rebellion against spirit laws. They revere the ancients, and seek to gain knowledge from the past — including consorting with ghosts.",
+      "notes": "Operates secretly across the city; no public turf."
+    },
+    {
+      "id": "rail-jacks",
+      "name": "Rail Jacks",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["charterhall"],
+      "tags": { "Labor": 4, "Transport": 4, "Muscle": 4, "Legal": 4, "Modest": 2 },
+      "allies": ["ministry-of-preservation"],
+      "enemies": [],
+      "npcs": [],
+      "summary": "The men and women who protect the electro-trains of the Imperium from the savage spirits of the deathlands. Have recently been making noises about forming a union."
+    },
+    {
+      "id": "the-reconciled",
+      "name": "The Reconciled",
+      "tier": 3,
+      "hold": "strong",
+      "districts": [],
+      "tags": { "Spirit": 5, "Occult": 4, "Sorcery": 4, "Politics": 3, "Illegal": 4 },
+      "allies": ["city-council", "gondoliers", "the-path-of-echoes"],
+      "enemies": ["the-church-of-ecstasy", "spirit-wardens", "sparkwrights", "the-dimmer-sisters"],
+      "npcs": [],
+      "summary": "An association of ancient spirits who have not gone feral with the passage of time.",
+      "turf": "None.",
+      "assets": "Several secret and hidden spirit wells across the city and in the deathlands, which give the Reconciled the arcane energy they need to survive.",
+      "quirks": "The spirits of the Reconciled do not lose their minds or become obsessed with vengeance as other spirits do. They can possess a victim indefinitely without any adverse effects.",
+      "situation": "The Reconciled are very ancient and wise; they see themselves as the rightful and just rulers that Duskwall needs. A few City Council members have become initiates in the Path of Echoes and will soon be vulnerable to possession. These councilors are also high-ranking members of the Church of Ecstasy, opening an infiltration into that organization as well.",
+      "clocks": [
+        { "name": "Infiltrate the City Council", "size": 8 },
+        { "name": "Infiltrate the Church of Ecstasy", "size": 8 }
+      ]
+    },
+    {
+      "id": "the-red-sashes",
+      "name": "The Red Sashes",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["crows-foot", "the-docks"],
+      "tags": { "Criminal": 4, "Foreign": 4, "Muscle": 4, "Assassination": 4, "Vice": 3, "Drugs": 3, "Grey": 4, "Modest": 3, "Academic": 2 },
+      "allies": ["iruvian-consulate", "the-path-of-echoes", "dockers", "cabbies", "inspectors"],
+      "enemies": ["the-lampblacks", "bluecoats", "gondoliers"],
+      "npcs": [
+        { "name": "Mylera Klev", "role": "Leader (shrewd, ruthless, educated, art collector)" }
+      ],
+      "summary": "Originally a school of ancient Iruvian sword arts, since expanded into criminal endeavors.",
+      "turf": "HQ in their sword-fighting school/temple. Operates a handful of high-end drug dens across Crow's Foot and the Docks.",
+      "assets": "Small contingent of master sword-fighters. Master alchemist; many potent potions and essences.",
+      "quirks": "Several members are sons and daughters of Iruvian nobility and diplomats in Doskvol. They train in swordplay at the school and sometimes participate in gang activities. Their families will commit significant resources to punishing anyone who harms their children.",
+      "situation": "The Red Sashes and the Lampblacks are at war over turf and vengeance. Mylera is recruiting every free blade in the district. The Red Sashes are very well-connected — former students placed at the Iruvian Consulate, in the Path of Echoes, and among the Inspectors.",
+      "clocks": [
+        { "name": "Destroy the Lampblacks", "size": 8 },
+        { "name": "Become ward boss of Crow's Foot", "size": 8 }
+      ]
+    },
+    {
+      "id": "sailors",
+      "name": "Sailors",
+      "tier": 3,
+      "hold": "weak",
+      "districts": ["the-docks"],
+      "tags": { "Labor": 4, "Military": 2, "Transport": 4, "Muscle": 2, "Legal": 4, "Modest": 2, "Grey": 2 },
+      "allies": ["the-crows", "leviathan-hunters", "the-silver-nails"],
+      "enemies": ["the-grinders"],
+      "npcs": [],
+      "summary": "The captains and crews for merchant and Imperial Navy ships."
+    },
+    {
+      "id": "lord-scurlock",
+      "name": "Lord Scurlock",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["six-towers"],
+      "tags": { "Noble": 4, "Occult": 5, "Sorcery": 5, "Rich": 4, "Grey": 4, "Spirit": 3, "Criminal": 2 },
+      "allies": ["city-council", "bluecoats", "inspectors", "the-forgotten-gods"],
+      "enemies": ["spirit-wardens"],
+      "npcs": [
+        { "name": "Lord Scurlock", "role": "(enigmatic, cold, arcane, old-fashioned) — counts as a faction unto himself; in conflicts he counts as a large gang (20 people)" }
+      ],
+      "summary": "An ancient noble, said to be immortal, like the Emperor. Possibly a vampire or sorcerer. Obsessed with the occult.",
+      "turf": "A secret lair outside the city. A dilapidated manor house in Six Towers and the catacombs beneath. An array of business holdings and cult shrines across the city, collected for some united purpose known only to Scurlock.",
+      "assets": "An impressive collection of occult and arcane curios, books, and ephemera. An ancient demonic temple.",
+      "quirks": "Scurlock is immune to spirits. Ghosts can't see, hear, or harm him. He makes no sound when he moves and is sometimes difficult to look at directly.",
+      "situation": "Lord Scurlock is bound by ancient magic to the demon Setarra. Now Scurlock must fulfill a debt: Setarra has found a nest of sea demons in the harbor, encased in stone, chained by magic from the cataclysm. She seeks to free them. Scurlock will aid her in this or suffer a dark doom.",
+      "clocks": [
+        { "name": "Fulfill debt to Setarra", "size": 12 },
+        { "name": "Obtain arcane secrets (repeating)", "size": 6 }
+      ]
+    },
+    {
+      "id": "servants",
+      "name": "Servants",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["brightstone", "whitecrown", "nightmarket", "six-towers"],
+      "tags": { "Labor": 4, "Information": 3, "Poor": 3, "Legal": 4, "Modest": 1 },
+      "allies": [],
+      "enemies": [],
+      "npcs": [],
+      "summary": "Domestic servants in the great houses of the city's elite. A quiet but well-placed gossip network."
+    },
+    {
+      "id": "severosi-consulate",
+      "name": "Severosi Consulate",
+      "tier": 1,
+      "hold": "strong",
+      "districts": ["charterhall"],
+      "tags": { "Foreign": 5, "Government": 3, "Politics": 2, "Legal": 4, "Modest": 2 },
+      "allies": ["the-silver-nails"],
+      "enemies": [],
+      "npcs": [],
+      "summary": "Diplomatic mission of Severos in Doskvol."
+    },
+    {
+      "id": "the-silver-nails",
+      "name": "The Silver Nails",
+      "tier": 3,
+      "hold": "strong",
+      "districts": ["charhollow", "the-docks"],
+      "tags": { "Foreign": 4, "Military": 3, "Muscle": 5, "Occult": 2, "Assassination": 3, "Modest": 3, "Grey": 3, "Sorcery": 2 },
+      "allies": ["imperial-military", "sailors", "severosi-consulate"],
+      "enemies": ["the-circle-of-flame", "the-grinders", "skovlan-consulate", "skovlander-refugees", "spirit-wardens"],
+      "npcs": [
+        { "name": "Seresh", "role": "Leader (bold, brash, defiant)" },
+        { "name": "Tuhan", "role": "Lead scout (bold, cunning, charming)" }
+      ],
+      "summary": "A company of Severosi mercenaries who fought for the Empire in the Unity War. Renowned ghost killers.",
+      "turf": "A large inn (The Mustang) and its fine stables (HQ).",
+      "assets": "A contingent of exquisite Severosian cavalry horses — fearless, swift, and trained to hunt and battle spirits. Arcane lances.",
+      "quirks": "Each member wears a ring fashioned from a silver nail, which protects against possession. They're trained in the Ghost Fighter special ability (Cutter).",
+      "situation": "Thanks to their expertise riding in the deathlands of Severos, the Silver Nails are perfectly suited to explore the forbidden Lost District outside the lightning barrier. Once the fiercest ghosts are driven out, they can seize control and plunder the forgotten treasures within. (The Spirit Wardens currently control access and keep the Silver Nails — and everyone else — out.)",
+      "clocks": [
+        { "name": "Destroy spirits in the Lost District", "size": 8 },
+        { "name": "Control the Lost District", "size": 8 }
+      ]
+    },
+    {
+      "id": "skovlan-consulate",
+      "name": "Skovlan Consulate",
+      "tier": 3,
+      "hold": "weak",
+      "districts": ["charterhall"],
+      "tags": { "Foreign": 5, "Government": 4, "Politics": 4, "Legal": 4, "Modest": 3 },
+      "allies": ["skovlander-refugees"],
+      "enemies": ["the-silver-nails", "imperial-military"],
+      "npcs": [],
+      "summary": "Diplomatic mission of Skovlan in Doskvol — strained after the Unity War."
+    },
+    {
+      "id": "skovlander-refugees",
+      "name": "Skovlander Refugees",
+      "tier": 3,
+      "hold": "weak",
+      "districts": ["charhollow", "dunslough", "coalridge"],
+      "tags": { "Foreign": 5, "Criminal": 2, "Poor": 4, "Grey": 3 },
+      "allies": ["skovlan-consulate", "ulf-ironborn"],
+      "enemies": ["imperial-military", "the-silver-nails"],
+      "npcs": [],
+      "summary": "Desperate survivors of the Unity War, forced to criminal opportunities when denied all others."
+    },
+    {
+      "id": "sparkwrights",
+      "name": "Sparkwrights",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["coalridge"],
+      "tags": { "Academic": 4, "Labor": 3, "Industry": 5, "Rich": 4, "Legal": 5, "Government": 2 },
+      "allies": ["city-council", "leviathan-hunters", "ministry-of-preservation"],
+      "enemies": ["the-path-of-echoes", "the-reconciled", "the-foundation"],
+      "npcs": [
+        { "name": "Una Farros", "role": "Instructor at Charterhall University (curious, vain, famous)" }
+      ],
+      "summary": "The engineers who maintain the lightning barriers. Also pioneers of spark-craft technology, indulging in dangerous research.",
+      "turf": "Massive workshop, factory, and design facility in Coalridge.",
+      "assets": "The electroplasmic generators, city lights, lightning barriers and associated facilities and systems across the city.",
+      "situation": "For centuries the Sparkwrights have worked in secret to develop an alternative fuel that could replace leviathan blood. A few researchers have gotten close, but 'accidents' have inevitably killed them and destroyed their work — certainly arranged by the nobility who rule because of their stranglehold on leviathan hunting. There is always a daring visionary willing to try again — at the risk of their life.",
+      "clocks": [{ "name": "Develop alternative fuel", "size": 12 }]
+    },
+    {
+      "id": "spirit-wardens",
+      "name": "Spirit Wardens",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["whitecrown", "brightstone"],
+      "tags": { "Law": 4, "Occult": 4, "Sorcery": 4, "Investigation": 4, "Muscle": 3, "Legal": 5, "Religious": 2, "Spirit Trade": 2 },
+      "allies": ["the-church-of-ecstasy", "deathlands-scavengers"],
+      "enemies": ["the-dimmer-sisters", "gondoliers", "lord-scurlock", "the-silver-nails", "the-unseen", "the-path-of-echoes", "the-reconciled", "the-horde"],
+      "npcs": [
+        { "name": "Bakoros", "role": "Code-name for one or more Wardens; sometimes lectures at the College of Immortal Studies" }
+      ],
+      "summary": "The bronze-masked hunters who destroy rogue spirits. Also run Bellweather Crematorium to properly dispose of corpses.",
+      "turf": "Bellweather Crematorium. The Master Warden's estate in Whitecrown.",
+      "assets": "The death bells that ring whenever someone dies in the city, and the deathseeker crows that fly to find the body (ancient, arcane). Many cohorts of expert Whispers. The most advanced spectrological and spark-craft equipment, including several spirit-hunter hulls.",
+      "quirks": "Membership is secret and utterly anonymous. They cut all ties and have no families or close relationships, save their fellow Wardens.",
+      "situation": "The Spirit Wardens know an enemy is attempting to infiltrate their ranks (they don't yet know it's the Unseen). They are laying a trap to uncover their identity and eliminate them.",
+      "clocks": [{ "name": "Uncover the infiltrators", "size": 8 }]
+    },
+    {
+      "id": "ulf-ironborn",
+      "name": "Ulf Ironborn",
+      "tier": 1,
+      "hold": "strong",
+      "districts": ["charhollow", "coalridge"],
+      "tags": { "Criminal": 4, "Foreign": 4, "Muscle": 4, "Illegal": 5, "Poor": 3 },
+      "allies": ["the-grinders", "skovlander-refugees"],
+      "enemies": ["the-billhooks"],
+      "npcs": [
+        { "name": "Ulf Ironborn", "role": "Leader (ruthless, savage, bold)" },
+        { "name": "Havid", "role": "Second (ruthless, volatile, shrewd)" }
+      ],
+      "summary": "A brutal Skovlander, newly arrived in the Dusk, fighting everyone for turf.",
+      "turf": "Rooms, workshop, and stable at The Old Forge tavern (HQ). A gambling den.",
+      "assets": "A small but powerfully savage gang of thugs.",
+      "quirks": "As a refugee of the Unity War, Ulf does not trust the local Akorosi, or anyone with strong allegiance to the Imperial government. Those of Skovlander blood find it easy to win his trust.",
+      "situation": "Ulf is newly arrived in Doskvol, seeking his fortune. His gang has had recent success with savage smash & grab operations, leading into a potential 'protection' racket. As more Skovlander refugees swell the population, the bigotry of locals is starting to surface. Ulf's blind rage will be sparked off when he encounters this, leading his gang into war with any 'true Duskers' brave enough to stand up to him.",
+      "clocks": [
+        { "name": "Carve out gang territory", "size": 6 },
+        { "name": "Rise in Tier", "size": 4 }
+      ]
+    },
+    {
+      "id": "the-unseen",
+      "name": "The Unseen",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["*"],
+      "tags": { "Criminal": 5, "Occult": 3, "Vice": 3, "Information": 4, "Sorcery": 3, "Assassination": 3, "Politics": 4, "Rich": 3, "Illegal": 5 },
+      "allies": ["bluecoats", "ironhook-prison", "the-forgotten-gods", "cyphers"],
+      "enemies": ["ink-rakes", "the-hive", "spirit-wardens"],
+      "npcs": [
+        { "name": "The Tower", "role": "Leader" },
+        { "name": "The Star", "role": "Captain" },
+        { "name": "Grull", "role": "Mid-level thug with big ambitions; undercover as a coach driver" }
+      ],
+      "summary": "An insidious criminal enterprise with secret membership. Thought to pull the strings of the entire underworld.",
+      "turf": "A multitude of vice dens and extortion rackets across the city — virtually none realize that they pay up to the Unseen. Several opulent townhouses used as safe houses.",
+      "assets": "A legion of thugs, thieves, and killers on-call to their secret masters.",
+      "quirks": "The perfect secrecy of the Unseen is the result of arcane rituals. Core members can recognize each other with attuned second sight. Any non-member who learns the identity of a member falls victim to a ritual that removes that memory from their mind after a few moments.",
+      "situation": "The Unseen crave the power and authority of the Spirit Wardens, whose own secret membership has so far resisted infiltration. The Tower and The Star plot to place their own spies and operatives among the Wardens and seize it from within.",
+      "clocks": [
+        { "name": "Infiltrate the Spirit Wardens", "size": 8 },
+        { "name": "Expand into other cities", "size": 8 }
+      ]
+    },
+    {
+      "id": "the-weeping-lady",
+      "name": "The Weeping Lady",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["six-towers", "dunslough"],
+      "tags": { "Religious": 3, "Politics": 2, "Legal": 4, "Modest": 2 },
+      "allies": [],
+      "enemies": [],
+      "npcs": [
+        { "name": "Mother Narya", "role": "Runs the Arms of the Weeping Lady charity house (Kind, Patient)" }
+      ],
+      "summary": "A charity and pseudo-religion, honoring the first Lord Governor of Doskvol, Lady Devera, said to be a champion of the poor."
+    },
+    {
+      "id": "the-wraiths",
+      "name": "The Wraiths",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["silkshore", "nightmarket"],
+      "tags": { "Criminal": 5, "Information": 5, "Luxury": 3, "Illegal": 5, "Modest": 2 },
+      "allies": ["cabbies"],
+      "enemies": ["bluecoats", "inspectors", "the-hive"],
+      "npcs": [
+        { "name": "Slate", "role": "Leader (sophisticated, daring, secretive)" },
+        { "name": "Loop", "role": "Appraisal expert (obsessive, moody, secretive)" }
+      ],
+      "summary": "A mysterious crew of masked thieves and spies.",
+      "turf": "Silkshore and Nightmarket are their primary hunting grounds. They specialize in the theft of luxury items and intelligence gathering for clients to use as blackmail.",
+      "assets": "A scattered collection of secret rooftop shelters. A secret lair in a tower in Silkshore. All manner of thieves' gear for burglary.",
+      "quirks": "Each member wears a mask and conceals their true identity with an alias. They communicate with a private sign language.",
+      "situation": "The Wraiths recently completed a heist at a luxury brothel in Nightmarket and happened to grab the private map book of a leviathan hunter — showing the secret hunting grounds of augured leviathan sites that will be used by the ship Storm Palace next season. Useless to the Wraiths, but worth a small fortune to another leviathan hunter. They are quietly arranging a sale.",
+      "clocks": [
+        { "name": "Recruit expert thieves", "size": 8 },
+        { "name": "Secure an arcane ally", "size": 6 }
+      ]
+    }
+  ]
+}
