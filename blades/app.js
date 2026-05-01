@@ -2,7 +2,7 @@
   "use strict";
 
   const ROMAN = ["0", "I", "II", "III", "IV", "V", "VI"];
-  const TAG_GROUP_ORDER = ["Domain", "Trade", "Wealth", "Legality", "Services"];
+  const TAG_GROUP_ORDER = ["Sphere", "Domain", "Trade", "Wealth", "Legality", "Services"];
 
   let DATA = null;
   const TAG_TO_GROUP = {};
