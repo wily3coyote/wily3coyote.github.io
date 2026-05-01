@@ -48,6 +48,8 @@
     {
       "id": "barrowcleft",
       "name": "Barrowcleft",
+      "tier": 2,
+      "hold": "strong",
       "summary": "Residences and markets for the farmers who work the radiant-energy fields and eeleries.",
       "notes": "Barrowcleft is the home to the laborers and overseers of the Ministry of Preservation who attend the radiant energy farms of Doskvol. A dusty, rural district with simple wooden buildings and wide dirt roads. Tight-knit family-based clans hold themselves apart from the city folk across the river.",
       "notable_locations": ["Barrow Bridge", "Lightning Tower", "Barrowcleft Market", "Radiant Energy Farm"]
@@ -55,6 +57,8 @@
     {
       "id": "brightstone",
       "name": "Brightstone",
+      "tier": 4,
+      "hold": "strong",
       "summary": "The grand mansions and luxury shops of the wealthy elite.",
       "notes": "Home to many of the wealthiest and most influential citizens of Doskvol. Broad paved streets under bright electric lights, sparkling perfumed canals, fine marble houses with rich timbers and intricate ironworks. Lavish restaurants, jewelers, tailors. Heavy Bluecoat patrols.",
       "notable_locations": ["Unity Park", "Silver Market", "The Sanctorium", "Bowmore Bridge"]
@@ -62,6 +66,8 @@
     {
       "id": "charhollow",
       "name": "Charhollow",
+      "tier": 1,
+      "hold": "strong",
       "summary": "A crowded district of tenements and stacked houses, home to the city's working class.",
       "notes": "Cheap, noisy, cramped, and sweltering from cookfires and hissing steam-pipes. Servants, dockers, sailors, stockyard and eelery workers, cabbies. There's a familial camaraderie among its residents — a true community bound by mutual support, in stark contrast to the rest of the city.",
       "notable_locations": ["The Sheets"]
@@ -69,6 +75,8 @@
     {
       "id": "charterhall",
       "name": "Charterhall",
+      "tier": 4,
+      "hold": "strong",
       "summary": "The city's civic offices and the hub for shops, artisans, and commerce.",
       "notes": "Site of the first major construction in the city, before the cataclysm. Home to civic offices: courts, licensing and taxation, banks, records archives. City officials, students at Charterhall University, and captains of Imperial industry live here.",
       "notable_locations": ["Charterhall University", "City Council Chambers", "Gaddoc Rail Station"]
@@ -76,6 +84,8 @@
     {
       "id": "coalridge",
       "name": "Coalridge",
+      "tier": 2,
+      "hold": "weak",
       "summary": "Industrial laborers and factories, cramped and soot-choked.",
       "notes": "Home to most of the machinists, industrial laborers, and factories of the city. Cramped, soot-choked, and loud, spewing dense clouds of black smoke. The old elevated train lines now carry heavy equipment and raw materials to and from Gaddoc Station.",
       "notable_locations": ["Coalridge Mine", "Sparkwrights Workshop"]
@@ -83,6 +93,8 @@
     {
       "id": "crows-foot",
       "name": "Crow's Foot",
+      "tier": 2,
+      "hold": "strong",
       "summary": "A cramped neighborhood of multi-level streets, ruled by gangs.",
       "notes": "A crossroads merging qualities of its neighbors: the illicit vices of Silkshore, the labor of the Docks, the poverty of Charhollow, and the architecture of Charterhall. A patchwork held together — and threatened apart — by a menagerie of competing street gangs and Bluecoat squads warring for every avenue.",
       "notable_locations": ["Crow's Nest"]
@@ -90,6 +102,8 @@
     {
       "id": "the-docks",
       "name": "The Docks",
+      "tier": 2,
+      "hold": "strong",
       "summary": "Rough taverns, tattoo parlors, fighting pits, and warehouses.",
       "notes": "Ancient, going back to the days before the cataclysm, when the area was a colony town of the old Skov kingdom. Today bustling with cargo haulers, fishing boats, and the prestigious leviathan hunter ships that provide the raw material that keeps the city running.",
       "notable_locations": ["The North Hook Company", "Leviathan Hunter Docks"]
@@ -97,6 +111,8 @@
     {
       "id": "dunslough",
       "name": "Dunslough",
+      "tier": 1,
+      "hold": "weak",
       "summary": "A labor camp served by convicts and a ghetto for the destitute poor.",
       "notes": "Originally a neighborhood for families of prisoners; now extreme poverty and neglect have worn it down into a sodden ruin. A vicious cycle: crime, arrest, incarceration, release back to Dunslough — Ironhook's endless supply of laborers.",
       "notable_locations": ["Ironhook Prison", "Ironhook Labor Camp"]
@@ -104,6 +120,8 @@
     {
       "id": "nightmarket",
       "name": "Nightmarket",
+      "tier": 2,
+      "hold": "strong",
       "summary": "The trade center for exotic goods imported by rail. Many vendors trade in illicit goods.",
       "notes": "Dominated by commerce. Situated near Gaddoc Rail Station, Nightmarket receives the bulk of salable goods from the cargo trains across the Imperium. Home to a new class of non-noble elites — wealthy without titles. Lavish private townhouses with all modern advances.",
       "notable_locations": ["The Veil"]
@@ -111,6 +129,8 @@
     {
       "id": "silkshore",
       "name": "Silkshore",
+      "tier": 2,
+      "hold": "strong",
       "summary": "The 'red lamp district' and artist community, best navigated by gondola.",
       "notes": "Criss-crossed by dozens of narrow canals. Brothels, vice dens, food stalls, and exotic shops perch at the waterside, ready to satisfy every appetite. A place of public indulgence and private indelicacy, catering to every pleasure imaginable.",
       "notable_locations": ["The Spark Grounds"]
@@ -118,6 +138,8 @@
     {
       "id": "six-towers",
       "name": "Six Towers",
+      "tier": 3,
+      "hold": "weak",
       "summary": "A formerly rich district, now worn down and dilapidated.",
       "notes": "Faded over centuries from its former prestige. The eponymous six towers were originally the grand residences of Doskvol's first noble families; all but two have been sold off or fallen into ruin. An empty, haunted feel; sprawling old buildings dark without power; fires of squatters in overgrown lots.",
       "notable_locations": ["Rowan House", "Bowmore House", "Mistshore Park", "Scurlock Manor", "Arms of the Weeping Lady", "Centuralia Club"]
@@ -125,6 +147,8 @@
     {
       "id": "whitecrown",
       "name": "Whitecrown",
+      "tier": 5,
+      "hold": "strong",
       "summary": "The sprawling estates of the Lord Governor, Hunter Commander, Master Warden, and Doskvol Academy.",
       "notes": "Sits atop a grand peak on the island across North Hook channel from the city proper. The Lord Governor's stronghold oversees all, flanked by grand estates of the most powerful nobility and the extravagantly appointed Doskvol Academy. A rich and rarefied world unto itself.",
       "notable_locations": ["Lord Governor's Stronghold", "Doskvol Academy", "Master Warden's Estate", "North Hook Lighthouse"]

@@ -600,20 +600,12 @@
 
     const header = el("div", { cls: "faction-header" });
     header.appendChild(el("h2", { cls: "faction-name", text: d.name }));
+    if (d.tier != null) {
+      header.appendChild(el("div", { cls: "faction-meta", text: tierLabel(d) }));
+    }
     app.appendChild(header);
 
     if (d.summary) app.appendChild(el("p", { cls: "faction-summary", text: d.summary }));
-
-    // Security / wealth — render only if authored.
-    if (d.security != null || d.wealth != null) {
-      const sec = el("section", { cls: "section" });
-      sec.appendChild(el("h3", { cls: "section-h", text: "Indicators" }));
-      const parts = [];
-      if (d.security != null) parts.push("Security: " + d.security);
-      if (d.wealth != null) parts.push("Wealth: " + d.wealth);
-      sec.appendChild(el("p", { text: parts.join(" · ") }));
-      app.appendChild(sec);
-    }
 
     if (d.notable_locations && d.notable_locations.length) {
       const sec = el("section", { cls: "section" });
