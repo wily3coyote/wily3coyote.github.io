@@ -53,28 +53,35 @@
 
   // ---------- Tag-browse selection ↔ hash ----------
   //
-  // Hash shape: #/tags[/<tag-csv>][?tier=<tier-csv>]
+  // Hash shape: #/tags[/<tag-csv>][?tier=<tier-csv>][&sphere=<sphere-csv>]
   //   #/tags                          — no filters
-  //   #/tags/Occult,Illegal           — tag filter only
-  //   #/tags?tier=2,3                 — tier filter only
-  //   #/tags/Criminal?tier=2,3        — both
+  //   #/tags/Occult,Illegal           — tag filter only (AND)
+  //   #/tags?tier=2,3                 — tier filter only (OR within row)
+  //   #/tags?sphere=Underworld,Fringe — sphere filter only (OR within row)
+  //   #/tags/Criminal?tier=2,3        — multiple
   //
-  // Tags use AND, tiers use OR within the row, the two combine with AND.
+  // Tags use AND across the row. Tiers and Spheres use OR within their own row.
+  // Cross-row: AND.
 
-  function encodeBrowseHash(tags, tiers) {
+  function encodeBrowseHash(tags, tiers, spheres) {
     let h = "#/tags";
     if (tags && tags.length) {
       h += "/" + tags.slice().sort().map(encodeURIComponent).join(",");
     }
+    const params = [];
     if (tiers && tiers.length) {
-      h += "?tier=" + tiers.slice().sort((a, b) => a - b).join(",");
+      params.push("tier=" + tiers.slice().sort((a, b) => a - b).join(","));
     }
+    if (spheres && spheres.length) {
+      params.push("sphere=" + spheres.slice().sort().map(encodeURIComponent).join(","));
+    }
+    if (params.length) h += "?" + params.join("&");
     return h;
   }
 
   function parseBrowseHash(rest) {
     // `rest` is whatever comes after "#/tags".
-    const out = { tags: [], tiers: [] };
+    const out = { tags: [], tiers: [], spheres: [] };
     if (!rest) return out;
 
     const qIdx = rest.indexOf("?");
@@ -96,8 +103,24 @@
           out.tiers = val.split(",")
             .map(s => parseInt(s, 10))
             .filter(n => !isNaN(n));
+        } else if (key === "sphere" && val) {
+          out.spheres = val.split(",").map(decodeURIComponent).filter(Boolean);
         }
       }
+    }
+
+    // Auto-classify any sphere tags accidentally in the tag list (legacy URLs).
+    if (DATA && DATA.tags && DATA.tags.Sphere) {
+      const sphereSet = new Set(DATA.tags.Sphere);
+      const realTags = [];
+      for (const t of out.tags) {
+        if (sphereSet.has(t)) {
+          if (!out.spheres.includes(t)) out.spheres.push(t);
+        } else {
+          realTags.push(t);
+        }
+      }
+      out.tags = realTags;
     }
     return out;
   }
@@ -146,14 +169,22 @@
 
   // Tags: AND (faction must have every selected tag with weight ≥ 1).
   // Tiers: OR within the row (faction.tier ∈ selected tiers); empty = any tier.
+  // Spheres: OR within the row (faction has any selected sphere tag); empty = any sphere.
   // Cross-row: AND.
   // Sort: sum(selected tag weights) desc, tier desc, name asc.
   // No tags selected → fall back to alphabetical (sum is 0 for everyone).
-  function filterFactions(tags, tiers) {
+  function filterFactions(tags, tiers, spheres) {
     const tierSet = (tiers && tiers.length) ? new Set(tiers) : null;
+    const sphereSet = (spheres && spheres.length) ? new Set(spheres) : null;
     const matches = DATA.factions.filter(f => {
       if (tags.length && !(f.tags && tags.every(t => f.tags[t]))) return false;
       if (tierSet && !tierSet.has(f.tier)) return false;
+      if (sphereSet) {
+        if (!f.tags) return false;
+        let ok = false;
+        for (const s of sphereSet) { if (f.tags[s]) { ok = true; break; } }
+        if (!ok) return false;
+      }
       return true;
     });
 
@@ -398,14 +429,17 @@
 
     const tags = state.tags || [];
     const tiers = state.tiers || [];
+    const spheres = state.spheres || [];
     const tagSet = new Set(tags);
     const tierSet = new Set(tiers);
-    const totalActive = tagSet.size + tierSet.size;
+    const sphereSet = new Set(spheres);
+    const totalActive = tagSet.size + tierSet.size + sphereSet.size;
 
     // Status / clear
     const status = el("div", { cls: "tag-status" });
     if (totalActive > 0) {
       const parts = [];
+      if (sphereSet.size) parts.push(sphereSet.size + " sphere" + (sphereSet.size === 1 ? "" : "s"));
       if (tagSet.size) parts.push(tagSet.size + " tag" + (tagSet.size === 1 ? "" : "s"));
       if (tierSet.size) parts.push(tierSet.size + " tier" + (tierSet.size === 1 ? "" : "s"));
       status.appendChild(el("span", { cls: "tag-status-count", text: parts.join(" · ") }));
@@ -415,27 +449,41 @@
     } else {
       status.appendChild(el("span", {
         cls: "tag-status-msg",
-        text: "Tap chips to filter. Tags combine with AND, tiers with OR."
+        text: "Tap chips to filter. Tags combine with AND; spheres and tiers with OR."
       }));
     }
     app.appendChild(status);
 
-    // Tag chip rows by group
+    // Chip rows. Sphere is OR-semantic (special handling); other tag groups are AND.
     for (const group of TAG_GROUP_ORDER) {
       if (!DATA.tags[group]) continue;
-      app.appendChild(buildChipRow({
-        label: group,
-        items: DATA.tags[group],
-        isOn: tag => tagSet.has(tag),
-        toHref: tag => {
-          const next = new Set(tagSet);
-          if (next.has(tag)) next.delete(tag); else next.add(tag);
-          return encodeBrowseHash([...next], tiers);
-        }
-      }));
+      if (group === "Sphere") {
+        app.appendChild(buildChipRow({
+          label: group,
+          items: DATA.tags[group],
+          isOn: s => sphereSet.has(s),
+          toHref: s => {
+            const next = new Set(sphereSet);
+            if (next.has(s)) next.delete(s); else next.add(s);
+            return encodeBrowseHash(tags, tiers, [...next]);
+          },
+          chipCls: "chip-or"
+        }));
+      } else {
+        app.appendChild(buildChipRow({
+          label: group,
+          items: DATA.tags[group],
+          isOn: tag => tagSet.has(tag),
+          toHref: tag => {
+            const next = new Set(tagSet);
+            if (next.has(tag)) next.delete(tag); else next.add(tag);
+            return encodeBrowseHash([...next], tiers, spheres);
+          }
+        }));
+      }
     }
 
-    // Tier chip row
+    // Tier chip row (OR-semantic)
     app.appendChild(buildChipRow({
       label: "Tier",
       items: ALL_TIERS,
@@ -444,12 +492,13 @@
       toHref: t => {
         const next = new Set(tierSet);
         if (next.has(t)) next.delete(t); else next.add(t);
-        return encodeBrowseHash(tags, [...next]);
-      }
+        return encodeBrowseHash(tags, [...next], spheres);
+      },
+      chipCls: "chip-or"
     }));
 
     // Results
-    const results = filterFactions(tags, tiers);
+    const results = filterFactions(tags, tiers, spheres);
     const headerText = results.length + " " + (results.length === 1 ? "faction" : "factions")
       + (totalActive ? " match" + (results.length === 1 ? "es" : "") + " filters" : " (no filter)");
     app.appendChild(el("div", { cls: "results-header", text: headerText }));
@@ -469,14 +518,14 @@
     app.appendChild(list);
   }
 
-  function buildChipRow({ label, items, isOn, toHref, labelFor }) {
+  function buildChipRow({ label, items, isOn, toHref, labelFor, chipCls }) {
     const row = el("div", { cls: "chip-row" });
     row.appendChild(el("span", { cls: "chip-row-label", text: label }));
     for (const item of items) {
       const on = isOn(item);
       const href = toHref(item);
       const chip = el("a", {
-        cls: "chip" + (on ? " chip-on" : ""),
+        cls: "chip" + (chipCls ? " " + chipCls : "") + (on ? " chip-on" : ""),
         href: href,
         text: labelFor ? labelFor(item) : item,
         attrs: { "aria-pressed": on ? "true" : "false" }
@@ -571,14 +620,21 @@
   function tagRow(label, items) {
     const row = el("div", { cls: "tag-group" });
     row.appendChild(el("span", { cls: "tag-group-label", text: label }));
+    const isSphereGroup = label === "Sphere";
     for (const [name, w] of items) {
+      const href = isSphereGroup
+        ? encodeBrowseHash([], [], [name])
+        : encodeBrowseHash([name], [], []);
       const tag = el("a", {
-        cls: "tag",
-        href: encodeBrowseHash([name], []),
+        cls: "tag" + (isSphereGroup ? " tag-or" : ""),
+        href,
         attrs: { "aria-label": "Filter by " + name }
       });
       tag.appendChild(el("span", { text: name }));
-      tag.appendChild(el("sup", { cls: "tag-weight", text: String(w) }));
+      // Sphere tags are categorical (every faction has exactly one); no weight to show.
+      if (!isSphereGroup) {
+        tag.appendChild(el("sup", { cls: "tag-weight", text: String(w) }));
+      }
       row.appendChild(tag);
     }
     return row;

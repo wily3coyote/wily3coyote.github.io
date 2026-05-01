@@ -8,6 +8,9 @@
   --accent: #c9a063;
   --accent-dim: #6b5331;
   --accent-soft: rgba(201, 160, 99, 0.12);
+  --or: #7ab0c8;
+  --or-dim: #355668;
+  --or-soft: rgba(122, 176, 200, 0.12);
   --border: #2a2a2a;
   --border-strong: #3a3a3a;
   --danger: #c46a5a;
@@ -245,6 +248,15 @@ main {
 }
 .chip.chip-on:hover { border-color: var(--accent); }
 
+/* OR-semantic chips (Sphere, Tier) — pick any-of, distinct from the gold AND chips. */
+.chip.chip-or:hover { border-color: var(--or-dim); }
+.chip.chip-or.chip-on {
+  background: var(--or-dim);
+  border-color: var(--or);
+  color: var(--fg);
+}
+.chip.chip-or.chip-on:hover { border-color: var(--or); }
+
 .results-header {
   margin: 1.25rem 0 0.5rem;
   padding-bottom: 0.4rem;
@@ -372,6 +384,13 @@ a.tag:hover {
   margin-left: 0.15rem;
   font-weight: 600;
 }
+
+/* OR-semantic tag chips on faction detail (currently just Sphere). */
+a.tag.tag-or:hover {
+  border-color: var(--or);
+  background: var(--bg-alt);
+}
+a.tag.tag-or .tag-weight { color: var(--or); }
 
 .npcs { list-style: none; padding: 0; margin: 0.25rem 0; }
 .npc { padding: 0.3rem 0; border-bottom: 1px dotted var(--border); }

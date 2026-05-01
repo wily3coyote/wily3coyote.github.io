@@ -15,14 +15,12 @@
       "Religious",
       "Military",
       "Academic",
-      "Government",
       "Foreign",
       "Spirit"
     ],
     "Trade": [
       "Occult",
       "Drugs",
-      "Weapons",
       "Luxury",
       "Information",
       "Vice",
@@ -166,7 +164,7 @@
       "tier": 3,
       "hold": "strong",
       "districts": ["*"],
-      "tags": { "Institutions": 5, "Law": 5, "Muscle": 4, "Legal": 5, "Government": 2, "Investigation": 2, "Modest": 2 },
+      "tags": { "Institutions": 5, "Law": 5, "Muscle": 4, "Legal": 5, "Investigation": 2, "Modest": 2 },
       "allies": ["city-council", "the-billhooks", "the-crows", "ironhook-prison", "lord-scurlock", "the-unseen"],
       "enemies": ["imperial-military"],
       "npcs": [
@@ -187,7 +185,7 @@
       "tier": 2,
       "hold": "strong",
       "districts": ["*"],
-      "tags": { "Institutions": 5, "Government": 1, "Criminal": 2, "Muscle": 2, "Grey": 4, "Modest": 2 },
+      "tags": { "Institutions": 5, "Criminal": 2, "Muscle": 2, "Grey": 4, "Modest": 2 },
       "allies": [],
       "enemies": [],
       "npcs": [
@@ -372,7 +370,7 @@
       "tier": 5,
       "hold": "strong",
       "districts": ["charterhall"],
-      "tags": { "Institutions": 5, "Noble": 5, "Government": 5, "Politics": 5, "Rich": 5, "Legal": 5 },
+      "tags": { "Institutions": 5, "Noble": 5, "Politics": 5, "Rich": 5, "Legal": 5 },
       "allies": ["bluecoats", "the-church-of-ecstasy", "the-circle-of-flame", "lord-scurlock", "the-brigade", "cabbies", "sparkwrights", "the-foundation"],
       "enemies": ["imperial-military", "inspectors", "ministry-of-preservation", "the-reconciled"],
       "npcs": [
@@ -436,7 +434,7 @@
       "tier": 1,
       "hold": "strong",
       "districts": ["charterhall"],
-      "tags": { "Institutions": 5, "Foreign": 5, "Government": 3, "Politics": 2, "Smuggling": 2, "Legal": 4, "Modest": 3 },
+      "tags": { "Institutions": 5, "Foreign": 5, "Politics": 2, "Smuggling": 2, "Legal": 4, "Modest": 3 },
       "allies": ["the-hive"],
       "enemies": [],
       "npcs": [
@@ -668,7 +666,7 @@
       "tier": 6,
       "hold": "strong",
       "districts": ["whitecrown", "charterhall"],
-      "tags": { "Institutions": 5, "Military": 5, "Government": 4, "Muscle": 5, "Rich": 4, "Legal": 5 },
+      "tags": { "Institutions": 5, "Military": 5, "Muscle": 5, "Rich": 4, "Legal": 5 },
       "allies": ["ministry-of-preservation", "the-silver-nails"],
       "enemies": ["bluecoats", "city-council", "the-grinders", "skovlander-refugees", "ulf-ironborn"],
       "npcs": [
@@ -696,7 +694,7 @@
       "tier": 3,
       "hold": "strong",
       "districts": ["*"],
-      "tags": { "Institutions": 5, "Law": 5, "Government": 3, "Investigation": 5, "Legal": 5, "Modest": 3 },
+      "tags": { "Institutions": 5, "Law": 5, "Investigation": 5, "Legal": 5, "Modest": 3 },
       "allies": ["the-gray-cloaks", "the-red-sashes"],
       "enemies": ["city-council", "the-crows", "lord-scurlock", "the-wraiths"],
       "npcs": [
@@ -710,7 +708,7 @@
       "tier": 4,
       "hold": "strong",
       "districts": ["dunslough"],
-      "tags": { "Institutions": 5, "Law": 4, "Government": 3, "Criminal": 3, "Muscle": 3, "Legal": 4, "Grey": 3, "Modest": 2 },
+      "tags": { "Institutions": 5, "Law": 4, "Criminal": 3, "Muscle": 3, "Legal": 4, "Grey": 3, "Modest": 2 },
       "allies": ["bluecoats", "the-lampblacks", "the-unseen"],
       "enemies": ["deathlands-scavengers"],
       "npcs": [
@@ -724,7 +722,7 @@
       "tier": 3,
       "hold": "strong",
       "districts": ["charterhall"],
-      "tags": { "Institutions": 5, "Foreign": 5, "Government": 4, "Noble": 3, "Politics": 4, "Rich": 4, "Legal": 5 },
+      "tags": { "Institutions": 5, "Foreign": 5, "Noble": 3, "Politics": 4, "Rich": 4, "Legal": 5 },
       "allies": ["the-red-sashes"],
       "enemies": [],
       "npcs": [
@@ -818,7 +816,7 @@
       "tier": 5,
       "hold": "strong",
       "districts": ["barrowcleft", "charterhall", "coalridge"],
-      "tags": { "Institutions": 5, "Government": 5, "Food": 5, "Transport": 5, "Politics": 4, "Rich": 5, "Legal": 5, "Noble": 2, "Muscle": 2 },
+      "tags": { "Institutions": 5, "Food": 5, "Transport": 5, "Politics": 4, "Rich": 5, "Legal": 5, "Noble": 2, "Muscle": 2 },
       "allies": ["the-billhooks", "imperial-military", "rail-jacks", "sparkwrights", "the-hive"],
       "enemies": ["leviathan-hunters", "city-council"],
       "npcs": [
@@ -961,7 +959,7 @@
       "tier": 1,
       "hold": "strong",
       "districts": ["charterhall"],
-      "tags": { "Institutions": 5, "Foreign": 5, "Government": 3, "Politics": 2, "Legal": 4, "Modest": 2 },
+      "tags": { "Institutions": 5, "Foreign": 5, "Politics": 2, "Legal": 4, "Modest": 2 },
       "allies": ["the-silver-nails"],
       "enemies": [],
       "npcs": [
@@ -998,7 +996,7 @@
       "tier": 3,
       "hold": "weak",
       "districts": ["charterhall"],
-      "tags": { "Institutions": 5, "Foreign": 5, "Government": 4, "Politics": 4, "Legal": 4, "Modest": 3 },
+      "tags": { "Institutions": 5, "Foreign": 5, "Politics": 4, "Legal": 4, "Modest": 3 },
       "allies": ["skovlander-refugees"],
       "enemies": ["the-silver-nails", "imperial-military"],
       "npcs": [
@@ -1026,7 +1024,7 @@
       "tier": 4,
       "hold": "strong",
       "districts": ["charterhall", "coalridge"],
-      "tags": { "Institutions": 5, "Academic": 4, "Labor": 2, "Industry": 5, "Rich": 4, "Legal": 4, "Government": 2 },
+      "tags": { "Institutions": 5, "Academic": 4, "Labor": 2, "Industry": 5, "Rich": 4, "Legal": 4 },
       "allies": ["city-council", "leviathan-hunters", "ministry-of-preservation"],
       "enemies": ["the-path-of-echoes", "the-reconciled", "the-foundation"],
       "npcs": [
