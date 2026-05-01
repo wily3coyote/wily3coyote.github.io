@@ -9,6 +9,8 @@
   const FACTION_BY_ID = {};
   const DISTRICT_BY_ID = {};
   let ALL_DISTRICT_IDS = [];
+  let ALL_TIERS = [];
+  let lastViewKey = null;
 
   // ---------- Load & prep ----------
 
@@ -28,6 +30,9 @@
       f.districts = expandDistricts(f.districts || []);
       FACTION_BY_ID[f.id] = f;
     });
+
+    ALL_TIERS = [...new Set(DATA.factions.map(f => f.tier).filter(t => t != null))]
+      .sort((a, b) => a - b);
   }
 
   function expandDistricts(arr) {
@@ -38,9 +43,59 @@
     return ALL_DISTRICT_IDS.filter(id => !exclude.has(id));
   }
 
-  // ---------- Fuzzy scoring ----------
+  // ---------- Tag-browse selection ↔ hash ----------
+  //
+  // Hash shape: #/tags[/<tag-csv>][?tier=<tier-csv>]
+  //   #/tags                          — no filters
+  //   #/tags/Occult,Illegal           — tag filter only
+  //   #/tags?tier=2,3                 — tier filter only
+  //   #/tags/Criminal?tier=2,3        — both
+  //
+  // Tags use AND, tiers use OR within the row, the two combine with AND.
 
-  // Higher is better. Returns -1 if not all query chars are matchable.
+  function encodeBrowseHash(tags, tiers) {
+    let h = "#/tags";
+    if (tags && tags.length) {
+      h += "/" + tags.slice().sort().map(encodeURIComponent).join(",");
+    }
+    if (tiers && tiers.length) {
+      h += "?tier=" + tiers.slice().sort((a, b) => a - b).join(",");
+    }
+    return h;
+  }
+
+  function parseBrowseHash(rest) {
+    // `rest` is whatever comes after "#/tags".
+    const out = { tags: [], tiers: [] };
+    if (!rest) return out;
+
+    const qIdx = rest.indexOf("?");
+    const pathPart = qIdx >= 0 ? rest.slice(0, qIdx) : rest;
+    const queryPart = qIdx >= 0 ? rest.slice(qIdx + 1) : "";
+
+    if (pathPart.startsWith("/")) {
+      const csv = pathPart.slice(1);
+      if (csv) out.tags = csv.split(",").map(decodeURIComponent).filter(Boolean);
+    }
+
+    if (queryPart) {
+      for (const part of queryPart.split("&")) {
+        const eq = part.indexOf("=");
+        if (eq < 0) continue;
+        const key = decodeURIComponent(part.slice(0, eq));
+        const val = decodeURIComponent(part.slice(eq + 1));
+        if (key === "tier" && val) {
+          out.tiers = val.split(",")
+            .map(s => parseInt(s, 10))
+            .filter(n => !isNaN(n));
+        }
+      }
+    }
+    return out;
+  }
+
+  // ---------- Fuzzy name scoring ----------
+
   function score(query, target) {
     const q = query.toLowerCase().trim();
     const t = target.toLowerCase();
@@ -54,7 +109,6 @@
       return 20000 + (wordStart ? 5000 : 0) - idx * 10 - t.length;
     }
 
-    // subsequence match
     let qi = 0, ti = 0, s = 0, prev = -2;
     while (qi < q.length && ti < t.length) {
       if (q[qi] === t[ti]) {
@@ -69,15 +123,42 @@
     return s;
   }
 
-  function search(query) {
+  function searchByName(query) {
     if (!query.trim()) {
-      return DATA.factions.slice().sort((a, b) => a.name.localeCompare(b.name));
+      return DATA.factions.slice().sort(compareByName);
     }
     return DATA.factions
       .map(f => ({ f, s: score(query, f.name) }))
       .filter(x => x.s > 0)
-      .sort((a, b) => b.s - a.s || a.f.name.localeCompare(b.f.name))
+      .sort((a, b) => b.s - a.s || compareByName(a.f, b.f))
       .map(x => x.f);
+  }
+
+  // ---------- Tag filter ----------
+
+  // Tags: AND (faction must have every selected tag with weight ≥ 1).
+  // Tiers: OR within the row (faction.tier ∈ selected tiers); empty = any tier.
+  // Cross-row: AND.
+  // Sort: sum(selected tag weights) desc, tier desc, name asc.
+  // No tags selected → fall back to alphabetical (sum is 0 for everyone).
+  function filterFactions(tags, tiers) {
+    const tierSet = (tiers && tiers.length) ? new Set(tiers) : null;
+    const matches = DATA.factions.filter(f => {
+      if (tags.length && !(f.tags && tags.every(t => f.tags[t]))) return false;
+      if (tierSet && !tierSet.has(f.tier)) return false;
+      return true;
+    });
+
+    if (!tags.length) {
+      return matches.sort(compareByName).map(f => ({ f, sum: 0 }));
+    }
+    return matches
+      .map(f => ({ f, sum: tags.reduce((s, t) => s + (f.tags[t] || 0), 0) }))
+      .sort((a, b) =>
+        b.sum - a.sum ||
+        (b.f.tier || 0) - (a.f.tier || 0) ||
+        compareByName(a.f, b.f)
+      );
   }
 
   // ---------- DOM helpers ----------
@@ -97,7 +178,13 @@
   function factionLink(id) {
     const f = FACTION_BY_ID[id];
     if (!f) return el("span", { cls: "related-missing", text: id });
-    return el("a", { cls: "related-link", href: "#/faction/" + id, text: f.name });
+    const a = el("a", { cls: "related-link", href: "#/faction/" + id });
+    a.appendChild(el("span", { cls: "related-name", text: f.name }));
+    if (f.tier != null) {
+      const tier = ROMAN[f.tier] != null ? ROMAN[f.tier] : String(f.tier);
+      a.appendChild(el("span", { cls: "related-tier", text: " (Tier " + tier + ")" }));
+    }
+    return a;
   }
 
   function tierLabel(f) {
@@ -106,7 +193,50 @@
     return "Tier " + t + " · " + hold;
   }
 
-  // ---------- Search view ----------
+  // Spec §4.1: ignore a leading "The " when sorting names.
+  function nameSortKey(name) {
+    return name.replace(/^the\s+/i, "");
+  }
+  function compareByName(a, b) {
+    return nameSortKey(a.name).localeCompare(nameSortKey(b.name));
+  }
+
+  // Replace the URL state without adding a history entry, then re-route.
+  // Used for tag-chip toggles so back-from-detail returns to the latest
+  // selection rather than walking through every chip toggle.
+  function replaceAndRoute(href) {
+    history.replaceState(null, "", href);
+    route();
+  }
+
+  function plainResultRow(f, matchingTags) {
+    const link = el("a", { cls: "result", href: "#/faction/" + f.id });
+    const row = el("div", { cls: "result-row" });
+    row.appendChild(el("span", { cls: "result-name", text: f.name }));
+    row.appendChild(el("span", { cls: "result-meta", text: tierLabel(f) }));
+    link.appendChild(row);
+
+    if (matchingTags && matchingTags.length) {
+      const wrap = el("div", { cls: "result-matching" });
+      const sorted = matchingTags.slice().sort(
+        (a, b) => (f.tags[b] || 0) - (f.tags[a] || 0) || a.localeCompare(b)
+      );
+      for (const t of sorted) {
+        const tagSpan = el("span", { cls: "result-tag" });
+        tagSpan.appendChild(el("span", { text: t }));
+        tagSpan.appendChild(el("sup", { cls: "tag-weight", text: String(f.tags[t] || 0) }));
+        wrap.appendChild(tagSpan);
+      }
+      link.appendChild(wrap);
+    }
+
+    if (f.summary) link.appendChild(el("span", { cls: "result-summary", text: f.summary }));
+    const li = el("li");
+    li.appendChild(link);
+    return li;
+  }
+
+  // ---------- Name search view ----------
 
   function renderSearch() {
     const app = document.getElementById("app");
@@ -130,44 +260,126 @@
     app.appendChild(list);
 
     function update() {
-      const results = search(input.value);
+      const results = searchByName(input.value);
       list.innerHTML = "";
-      if (results.length === 0) {
+      if (!results.length) {
         const li = el("li");
         li.appendChild(el("div", { cls: "empty-state", text: "No matches." }));
         list.appendChild(li);
         return;
       }
       const frag = document.createDocumentFragment();
-      for (const f of results) {
-        const li = el("li");
-        const link = el("a", {
-          cls: "result",
-          href: "#/faction/" + f.id,
-          children: [
-            el("div", {
-              cls: "result-row",
-              children: [
-                el("span", { cls: "result-name", text: f.name }),
-                el("span", { cls: "result-meta", text: tierLabel(f) })
-              ]
-            }),
-            f.summary ? el("span", { cls: "result-summary", text: f.summary }) : null
-          ]
-        });
-        li.appendChild(link);
-        frag.appendChild(li);
-      }
+      for (const f of results) frag.appendChild(plainResultRow(f, null));
       list.appendChild(frag);
     }
 
     input.addEventListener("input", update);
     update();
 
-    // Auto-focus on desktop only — avoid pop-up keyboard surprise on mobile.
     if (window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       setTimeout(() => input.focus(), 0);
     }
+  }
+
+  // ---------- Tag browse view ----------
+
+  function renderTags(state) {
+    const app = document.getElementById("app");
+    app.innerHTML = "";
+
+    const tags = state.tags || [];
+    const tiers = state.tiers || [];
+    const tagSet = new Set(tags);
+    const tierSet = new Set(tiers);
+    const totalActive = tagSet.size + tierSet.size;
+
+    // Status / clear
+    const status = el("div", { cls: "tag-status" });
+    if (totalActive > 0) {
+      const parts = [];
+      if (tagSet.size) parts.push(tagSet.size + " tag" + (tagSet.size === 1 ? "" : "s"));
+      if (tierSet.size) parts.push(tierSet.size + " tier" + (tierSet.size === 1 ? "" : "s"));
+      status.appendChild(el("span", { cls: "tag-status-count", text: parts.join(" · ") }));
+      const clear = el("a", { cls: "tag-clear", href: "#/tags", text: "Clear" });
+      clear.addEventListener("click", e => { e.preventDefault(); replaceAndRoute("#/tags"); });
+      status.appendChild(clear);
+    } else {
+      status.appendChild(el("span", {
+        cls: "tag-status-msg",
+        text: "Tap chips to filter. Tags combine with AND, tiers with OR."
+      }));
+    }
+    app.appendChild(status);
+
+    // Tag chip rows by group
+    for (const group of TAG_GROUP_ORDER) {
+      if (!DATA.tags[group]) continue;
+      app.appendChild(buildChipRow({
+        label: group,
+        items: DATA.tags[group],
+        isOn: tag => tagSet.has(tag),
+        toHref: tag => {
+          const next = new Set(tagSet);
+          if (next.has(tag)) next.delete(tag); else next.add(tag);
+          return encodeBrowseHash([...next], tiers);
+        }
+      }));
+    }
+
+    // Tier chip row
+    app.appendChild(buildChipRow({
+      label: "Tier",
+      items: ALL_TIERS,
+      labelFor: t => ROMAN[t] != null ? ROMAN[t] : String(t),
+      isOn: t => tierSet.has(t),
+      toHref: t => {
+        const next = new Set(tierSet);
+        if (next.has(t)) next.delete(t); else next.add(t);
+        return encodeBrowseHash(tags, [...next]);
+      }
+    }));
+
+    // Results
+    const results = filterFactions(tags, tiers);
+    const headerText = results.length + " " + (results.length === 1 ? "faction" : "factions")
+      + (totalActive ? " match" + (results.length === 1 ? "es" : "") + " filters" : " (no filter)");
+    app.appendChild(el("div", { cls: "results-header", text: headerText }));
+
+    const list = el("ul", { cls: "results" });
+    if (!results.length) {
+      const li = el("li");
+      li.appendChild(el("div", { cls: "empty-state", text: "No factions match these filters." }));
+      list.appendChild(li);
+    } else {
+      const frag = document.createDocumentFragment();
+      for (const { f } of results) {
+        frag.appendChild(plainResultRow(f, tagSet.size ? tags : null));
+      }
+      list.appendChild(frag);
+    }
+    app.appendChild(list);
+  }
+
+  function buildChipRow({ label, items, isOn, toHref, labelFor }) {
+    const row = el("div", { cls: "chip-row" });
+    row.appendChild(el("span", { cls: "chip-row-label", text: label }));
+    for (const item of items) {
+      const on = isOn(item);
+      const href = toHref(item);
+      const chip = el("a", {
+        cls: "chip" + (on ? " chip-on" : ""),
+        href: href,
+        text: labelFor ? labelFor(item) : item,
+        attrs: { "aria-pressed": on ? "true" : "false" }
+      });
+      chip.addEventListener("click", e => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+        e.preventDefault();
+        replaceAndRoute(href);
+      });
+      row.appendChild(chip);
+    }
+    return row;
   }
 
   // ---------- Faction detail view ----------
@@ -176,7 +388,7 @@
     const app = document.getElementById("app");
     app.innerHTML = "";
 
-    app.appendChild(el("a", { cls: "back-link", href: "#/", text: "← Search" }));
+    app.appendChild(el("a", { cls: "back-link", href: "#/", text: "← Back" }));
 
     const f = FACTION_BY_ID[id];
     if (!f) {
@@ -191,22 +403,20 @@
 
     if (f.summary) app.appendChild(el("p", { cls: "faction-summary", text: f.summary }));
 
-    renderTags(app, f);
-    renderDistricts(app, f);
-    renderNpcs(app, f);
-    renderRelated(app, "Allies", f.allies);
-    renderRelated(app, "Enemies", f.enemies);
-    renderText(app, "Turf", f.turf);
-    renderText(app, "Assets", f.assets);
-    renderText(app, "Quirks", f.quirks);
-    renderText(app, "Situation", f.situation);
-    renderClocks(app, f.clocks);
-    renderText(app, "Notes", f.notes);
-
-    window.scrollTo(0, 0);
+    renderTagsSection(app, f);
+    renderDistrictsSection(app, f);
+    renderNpcsSection(app, f);
+    renderRelatedSection(app, "Allies", f.allies);
+    renderRelatedSection(app, "Enemies", f.enemies);
+    renderTextSection(app, "Turf", f.turf);
+    renderTextSection(app, "Assets", f.assets);
+    renderTextSection(app, "Quirks", f.quirks);
+    renderTextSection(app, "Situation", f.situation);
+    renderClocksSection(app, f.clocks);
+    renderTextSection(app, "Notes", f.notes);
   }
 
-  function renderTags(app, f) {
+  function renderTagsSection(app, f) {
     if (!f.tags || !Object.keys(f.tags).length) return;
     const sec = el("section", { cls: "section" });
     sec.appendChild(el("h3", { cls: "section-h", text: "Tags" }));
@@ -235,7 +445,11 @@
     const row = el("div", { cls: "tag-group" });
     row.appendChild(el("span", { cls: "tag-group-label", text: label }));
     for (const [name, w] of items) {
-      const tag = el("span", { cls: "tag" });
+      const tag = el("a", {
+        cls: "tag",
+        href: encodeBrowseHash([name], []),
+        attrs: { "aria-label": "Filter by " + name }
+      });
       tag.appendChild(el("span", { text: name }));
       tag.appendChild(el("sup", { cls: "tag-weight", text: String(w) }));
       row.appendChild(tag);
@@ -243,12 +457,11 @@
     return row;
   }
 
-  function renderDistricts(app, f) {
+  function renderDistrictsSection(app, f) {
     const sec = el("section", { cls: "section" });
     sec.appendChild(el("h3", { cls: "section-h", text: "Districts" }));
     if (f.districts && f.districts.length) {
-      const names = f.districts
-        .map(id => (DISTRICT_BY_ID[id] && DISTRICT_BY_ID[id].name) || id);
+      const names = f.districts.map(id => (DISTRICT_BY_ID[id] && DISTRICT_BY_ID[id].name) || id);
       sec.appendChild(el("p", { text: names.join(", ") }));
     } else {
       sec.appendChild(el("p", { cls: "muted", text: "No fixed turf." }));
@@ -256,7 +469,7 @@
     app.appendChild(sec);
   }
 
-  function renderNpcs(app, f) {
+  function renderNpcsSection(app, f) {
     if (!f.npcs || !f.npcs.length) return;
     const sec = el("section", { cls: "section" });
     sec.appendChild(el("h3", { cls: "section-h", text: "Notable NPCs" }));
@@ -274,7 +487,7 @@
     app.appendChild(sec);
   }
 
-  function renderRelated(app, label, ids) {
+  function renderRelatedSection(app, label, ids) {
     if (!ids || !ids.length) return;
     const sec = el("section", { cls: "section" });
     sec.appendChild(el("h3", { cls: "section-h", text: label }));
@@ -284,7 +497,7 @@
     app.appendChild(sec);
   }
 
-  function renderText(app, label, body) {
+  function renderTextSection(app, label, body) {
     if (!body) return;
     const sec = el("section", { cls: "section" });
     sec.appendChild(el("h3", { cls: "section-h", text: label }));
@@ -292,28 +505,49 @@
     app.appendChild(sec);
   }
 
-  function renderClocks(app, clocks) {
+  function renderClocksSection(app, clocks) {
     if (!clocks || !clocks.length) return;
     const sec = el("section", { cls: "section" });
     sec.appendChild(el("h3", { cls: "section-h", text: "Clocks" }));
     const ul = el("ul");
-    for (const c of clocks) {
-      ul.appendChild(el("li", { text: c.name + " [" + c.size + "]" }));
-    }
+    for (const c of clocks) ul.appendChild(el("li", { text: c.name + " [" + c.size + "]" }));
     sec.appendChild(ul);
     app.appendChild(sec);
   }
 
-  // ---------- Routing ----------
+  // ---------- Routing & nav ----------
+
+  function viewKeyFromHash(hash) {
+    if (hash.startsWith("#/faction/")) return "faction";
+    if (hash === "#/tags" || hash.startsWith("#/tags/") || hash.startsWith("#/tags?")) return "tags";
+    return "name";
+  }
+
+  function updateNav(viewKey) {
+    document.querySelectorAll(".nav-item").forEach(a => {
+      const r = a.getAttribute("data-route");
+      a.classList.toggle("active", r === viewKey);
+    });
+  }
 
   function route() {
     const hash = location.hash || "#/";
-    const m = hash.match(/^#\/faction\/(.+)$/);
-    if (m) {
+    const viewKey = viewKeyFromHash(hash);
+
+    let m;
+    if ((m = hash.match(/^#\/faction\/(.+)$/))) {
       renderFaction(decodeURIComponent(m[1]));
+    } else if (hash === "#/tags" || hash.startsWith("#/tags/") || hash.startsWith("#/tags?")) {
+      renderTags(parseBrowseHash(hash.slice("#/tags".length)));
     } else {
       renderSearch();
     }
+
+    // Scroll to top on view change or any new faction page.
+    if (viewKey === "faction" || viewKey !== lastViewKey) window.scrollTo(0, 0);
+    lastViewKey = viewKey;
+
+    updateNav(viewKey === "faction" ? null : viewKey);
   }
 
   // ---------- Init ----------
