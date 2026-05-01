@@ -48,8 +48,6 @@
     {
       "id": "barrowcleft",
       "name": "Barrowcleft",
-      "tier": 2,
-      "hold": "strong",
       "summary": "Residences and markets for the farmers who work the radiant-energy fields and eeleries.",
       "notes": "Barrowcleft is the home to the laborers and overseers of the Ministry of Preservation who attend the radiant energy farms of Doskvol. A dusty, rural district with simple wooden buildings and wide dirt roads. Tight-knit family-based clans hold themselves apart from the city folk across the river.",
       "notable_locations": ["Barrow Bridge", "Lightning Tower", "Barrowcleft Market", "Radiant Energy Farm"]
@@ -57,8 +55,6 @@
     {
       "id": "brightstone",
       "name": "Brightstone",
-      "tier": 4,
-      "hold": "strong",
       "summary": "The grand mansions and luxury shops of the wealthy elite.",
       "notes": "Home to many of the wealthiest and most influential citizens of Doskvol. Broad paved streets under bright electric lights, sparkling perfumed canals, fine marble houses with rich timbers and intricate ironworks. Lavish restaurants, jewelers, tailors. Heavy Bluecoat patrols.",
       "notable_locations": ["Unity Park", "Silver Market", "The Sanctorium", "Bowmore Bridge"]
@@ -66,8 +62,6 @@
     {
       "id": "charhollow",
       "name": "Charhollow",
-      "tier": 1,
-      "hold": "strong",
       "summary": "A crowded district of tenements and stacked houses, home to the city's working class.",
       "notes": "Cheap, noisy, cramped, and sweltering from cookfires and hissing steam-pipes. Servants, dockers, sailors, stockyard and eelery workers, cabbies. There's a familial camaraderie among its residents — a true community bound by mutual support, in stark contrast to the rest of the city.",
       "notable_locations": ["The Sheets"]
@@ -75,8 +69,6 @@
     {
       "id": "charterhall",
       "name": "Charterhall",
-      "tier": 4,
-      "hold": "strong",
       "summary": "The city's civic offices and the hub for shops, artisans, and commerce.",
       "notes": "Site of the first major construction in the city, before the cataclysm. Home to civic offices: courts, licensing and taxation, banks, records archives. City officials, students at Charterhall University, and captains of Imperial industry live here.",
       "notable_locations": ["Charterhall University", "City Council Chambers", "Gaddoc Rail Station"]
@@ -84,8 +76,6 @@
     {
       "id": "coalridge",
       "name": "Coalridge",
-      "tier": 2,
-      "hold": "weak",
       "summary": "Industrial laborers and factories, cramped and soot-choked.",
       "notes": "Home to most of the machinists, industrial laborers, and factories of the city. Cramped, soot-choked, and loud, spewing dense clouds of black smoke. The old elevated train lines now carry heavy equipment and raw materials to and from Gaddoc Station.",
       "notable_locations": ["Coalridge Mine", "Sparkwrights Workshop"]
@@ -93,8 +83,6 @@
     {
       "id": "crows-foot",
       "name": "Crow's Foot",
-      "tier": 2,
-      "hold": "strong",
       "summary": "A cramped neighborhood of multi-level streets, ruled by gangs.",
       "notes": "A crossroads merging qualities of its neighbors: the illicit vices of Silkshore, the labor of the Docks, the poverty of Charhollow, and the architecture of Charterhall. A patchwork held together — and threatened apart — by a menagerie of competing street gangs and Bluecoat squads warring for every avenue.",
       "notable_locations": ["Crow's Nest"]
@@ -102,8 +90,6 @@
     {
       "id": "the-docks",
       "name": "The Docks",
-      "tier": 2,
-      "hold": "strong",
       "summary": "Rough taverns, tattoo parlors, fighting pits, and warehouses.",
       "notes": "Ancient, going back to the days before the cataclysm, when the area was a colony town of the old Skov kingdom. Today bustling with cargo haulers, fishing boats, and the prestigious leviathan hunter ships that provide the raw material that keeps the city running.",
       "notable_locations": ["The North Hook Company", "Leviathan Hunter Docks"]
@@ -111,8 +97,6 @@
     {
       "id": "dunslough",
       "name": "Dunslough",
-      "tier": 1,
-      "hold": "weak",
       "summary": "A labor camp served by convicts and a ghetto for the destitute poor.",
       "notes": "Originally a neighborhood for families of prisoners; now extreme poverty and neglect have worn it down into a sodden ruin. A vicious cycle: crime, arrest, incarceration, release back to Dunslough — Ironhook's endless supply of laborers.",
       "notable_locations": ["Ironhook Prison", "Ironhook Labor Camp"]
@@ -120,8 +104,6 @@
     {
       "id": "nightmarket",
       "name": "Nightmarket",
-      "tier": 2,
-      "hold": "strong",
       "summary": "The trade center for exotic goods imported by rail. Many vendors trade in illicit goods.",
       "notes": "Dominated by commerce. Situated near Gaddoc Rail Station, Nightmarket receives the bulk of salable goods from the cargo trains across the Imperium. Home to a new class of non-noble elites — wealthy without titles. Lavish private townhouses with all modern advances.",
       "notable_locations": ["The Veil"]
@@ -129,8 +111,6 @@
     {
       "id": "silkshore",
       "name": "Silkshore",
-      "tier": 2,
-      "hold": "strong",
       "summary": "The 'red lamp district' and artist community, best navigated by gondola.",
       "notes": "Criss-crossed by dozens of narrow canals. Brothels, vice dens, food stalls, and exotic shops perch at the waterside, ready to satisfy every appetite. A place of public indulgence and private indelicacy, catering to every pleasure imaginable.",
       "notable_locations": ["The Spark Grounds"]
@@ -138,8 +118,6 @@
     {
       "id": "six-towers",
       "name": "Six Towers",
-      "tier": 3,
-      "hold": "weak",
       "summary": "A formerly rich district, now worn down and dilapidated.",
       "notes": "Faded over centuries from its former prestige. The eponymous six towers were originally the grand residences of Doskvol's first noble families; all but two have been sold off or fallen into ruin. An empty, haunted feel; sprawling old buildings dark without power; fires of squatters in overgrown lots.",
       "notable_locations": ["Rowan House", "Bowmore House", "Mistshore Park", "Scurlock Manor", "Arms of the Weeping Lady", "Centuralia Club"]
@@ -147,8 +125,6 @@
     {
       "id": "whitecrown",
       "name": "Whitecrown",
-      "tier": 5,
-      "hold": "strong",
       "summary": "The sprawling estates of the Lord Governor, Hunter Commander, Master Warden, and Doskvol Academy.",
       "notes": "Sits atop a grand peak on the island across North Hook channel from the city proper. The Lord Governor's stronghold oversees all, flanked by grand estates of the most powerful nobility and the extravagantly appointed Doskvol Academy. A rich and rarefied world unto itself.",
       "notable_locations": ["Lord Governor's Stronghold", "Doskvol Academy", "Master Warden's Estate", "North Hook Lighthouse"]
@@ -164,7 +140,7 @@
       "districts": ["crows-foot", "the-docks"],
       "tags": { "Criminal": 5, "Muscle": 5, "Illegal": 5, "Vice": 2, "Poor": 2 },
       "allies": ["bluecoats", "ministry-of-preservation"],
-      "enemies": ["ulf-ironborn", "the-lost"],
+      "enemies": ["ulf-ironborn", "the-lost", "citizens-of-crows-foot", "citizens-of-the-docks"],
       "npcs": [
         { "name": "Tarvul", "role": "Leader (serving life in prison; savage, arrogant, family man)" },
         { "name": "Erin", "role": "Captain — Tarvul's sister (confident, deadly, ambitious)" },
@@ -207,7 +183,9 @@
       "tags": { "Government": 1, "Criminal": 2, "Muscle": 2, "Grey": 4, "Modest": 2 },
       "allies": [],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The fire-fighters of the city. Beloved for their life-saving heroism, or reviled for their looting and extortion rackets. Also known as 'Sallies' (from 'salamanders,' their ancient name).",
       "notes": "Index-only entry — no detailed write-up in the rulebook."
     },
@@ -220,7 +198,9 @@
       "tags": { "Labor": 4, "Transport": 5, "Information": 3, "Legal": 4, "Modest": 2 },
       "allies": [],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The public coach operators. They also breed the large Akorosian goats used to pull the carriages. An impressive gossip network."
     },
     {
@@ -252,7 +232,7 @@
       "tier": 3,
       "hold": "strong",
       "districts": ["six-towers"],
-      "tags": { "Academic": 4 ,"Noble": 4, "Criminal": 3, "Occult": 4, "Vice": 3, "Information": 4, "Luxury": 3, "Politics": 4, "Rich": 5, "Grey": 4 },
+      "tags": { "Academic": 4, "Noble": 4, "Criminal": 3, "Occult": 4, "Vice": 3, "Information": 4, "Luxury": 3, "Politics": 4, "Rich": 5, "Grey": 4 },
       "allies": ["the-forgotten-gods", "the-path-of-echoes", "city-council", "the-foundation"],
       "enemies": ["the-hive", "the-silver-nails"],
       "npcs": [
@@ -270,6 +250,102 @@
       "quirks": "One of The Seven is actually a demon in disguise.",
       "situation": "The Circle has an extensive library of scholarly works that catalog many of the arcane artifacts and valuable treasures that disappeared when the Lost District was abandoned. Of special interest are the remains of Kotar — a legendary sorcerer, demon, or hero. The Eye, Hand, and Heart of Kotar are said to possess great power.",
       "clocks": [{ "name": "Acquire all the ancient artifacts of Kotar", "size": 8 }]
+    },
+    {
+      "id": "citizens-of-barrowcleft",
+      "name": "Citizens of Barrowcleft",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["barrowcleft"],
+      "summary": "The clannish farm families who work the radiant-energy fields across the river."
+    },
+    {
+      "id": "citizens-of-brightstone",
+      "name": "Citizens of Brightstone",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["brightstone"],
+      "summary": "The wealthiest and most influential citizens of Doskvol."
+    },
+    {
+      "id": "citizens-of-charhollow",
+      "name": "Citizens of Charhollow",
+      "tier": 1,
+      "hold": "strong",
+      "districts": ["charhollow"],
+      "summary": "The bulk of Doskvol's working-class workforce — servants, dockers, sailors, and stockyard hands."
+    },
+    {
+      "id": "citizens-of-charterhall",
+      "name": "Citizens of Charterhall",
+      "tier": 4,
+      "hold": "strong",
+      "districts": ["charterhall"],
+      "summary": "City officials, university scholars, and captains of Imperial industry."
+    },
+    {
+      "id": "citizens-of-coalridge",
+      "name": "Citizens of Coalridge",
+      "tier": 2,
+      "hold": "weak",
+      "districts": ["coalridge"],
+      "summary": "The machinists and industrial laborers of the city's factories."
+    },
+    {
+      "id": "citizens-of-crows-foot",
+      "name": "Citizens of Crow's Foot",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["crows-foot"],
+      "summary": "A patchwork populace caught in the crossfire of competing gangs."
+    },
+    {
+      "id": "citizens-of-dunslough",
+      "name": "Citizens of Dunslough",
+      "tier": 1,
+      "hold": "weak",
+      "districts": ["dunslough"],
+      "summary": "The destitute poor of the city, ground down by the prison camp's cycle."
+    },
+    {
+      "id": "citizens-of-nightmarket",
+      "name": "Citizens of Nightmarket",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["nightmarket"],
+      "summary": "A new class of non-noble elites who built fortunes on rail-borne trade."
+    },
+    {
+      "id": "citizens-of-silkshore",
+      "name": "Citizens of Silkshore",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["silkshore"],
+      "summary": "The proprietors, performers, and patrons of the red-lamp district."
+    },
+    {
+      "id": "citizens-of-six-towers",
+      "name": "Citizens of Six Towers",
+      "tier": 3,
+      "hold": "weak",
+      "districts": ["six-towers"],
+      "summary": "Squatters and faded gentry holding out in a once-grand district."
+    },
+    {
+      "id": "citizens-of-the-docks",
+      "name": "Citizens of the Docks",
+      "tier": 2,
+      "hold": "strong",
+      "districts": ["the-docks"],
+      "summary": "Dockers, sailors, fishers, and leviathan-hunter crews of the port."
+    },
+    {
+      "id": "citizens-of-whitecrown",
+      "name": "Citizens of Whitecrown",
+      "tier": 5,
+      "hold": "strong",
+      "districts": ["whitecrown"],
+      "summary": "The Lord Governor's court and the highest-ranking noble families of the city."
     },
     {
       "id": "city-council",
@@ -305,7 +381,7 @@
       "hold": "weak",
       "districts": ["crows-foot", "the-docks"],
       "tags": { "Criminal": 5, "Vice": 4, "Muscle": 4, "Illegal": 5, "Modest": 2 },
-      "allies": ["bluecoats", "sailors", "the-lost"],
+      "allies": ["bluecoats", "sailors", "the-lost", "citizens-of-crows-foot"],
       "enemies": ["the-hive", "inspectors", "dockers"],
       "npcs": [
         { "name": "Lyssa", "role": "Leader (brash, killer, noble family)" },
@@ -330,7 +406,9 @@
       "tags": { "Labor": 4, "Information": 4, "Transport": 3, "Legal": 4, "Modest": 2 },
       "allies": ["the-unseen"],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The messenger guild of the city. Cyphers swear sacred oaths of secrecy — never revealing the contents of their messages or the identities of their clients — or so they claim."
     },
     {
@@ -342,7 +420,9 @@
       "tags": { "Foreign": 5, "Government": 3, "Politics": 2, "Smuggling": 2, "Legal": 4, "Modest": 3 },
       "allies": ["the-hive"],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Diplomatic mission of the Dagger Isles in Doskvol."
     },
     {
@@ -398,7 +478,9 @@
       "tags": { "Labor": 5, "Industry": 2, "Transport": 2, "Muscle": 2, "Legal": 4, "Poor": 2 },
       "allies": ["the-fog-hounds", "the-grinders", "the-red-sashes", "leviathan-hunters"],
       "enemies": ["the-crows"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The hard-bitten laborers who work the docks."
     },
     {
@@ -434,7 +516,9 @@
       "tags": { "Religious": 4, "Spirit": 3, "Occult": 5, "Sorcery": 4, "Illegal": 4, "Grey": 3, "Modest": 2 },
       "allies": ["deathlands-scavengers", "the-circle-of-flame", "the-dimmer-sisters", "lord-scurlock", "the-unseen"],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Cults that attempt to follow the old ways from before the cataclysm, doing the bidding of demons and darker things. There are many cults, who rarely organize together. An individual cult is usually Tier I or Tier II.",
       "notes": "Scattered across the city; no single turf."
     },
@@ -447,7 +531,9 @@
       "tags": { "Labor": 4, "Academic": 3, "Industry": 3, "Politics": 3, "Rich": 4, "Legal": 4, "Grey": 3, "Criminal": 2 },
       "allies": ["city-council", "the-circle-of-flame", "the-dimmer-sisters"],
       "enemies": ["sparkwrights"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The powerful ancient order of architects and builders. Many of their enemies have disappeared behind the brick and mortar of Doskvol."
     },
     {
@@ -457,7 +543,7 @@
       "hold": "strong",
       "districts": ["brightstone", "charhollow", "charterhall", "crows-foot", "silkshore", "six-towers", "the-docks"],
       "tags": { "Labor": 4, "Transport": 5, "Occult": 3, "Legal": 4, "Modest": 3, "Sorcery": 2 },
-      "allies": ["the-lampblacks", "deathlands-scavengers", "the-reconciled"],
+      "allies": ["the-lampblacks", "deathlands-scavengers", "the-reconciled", "citizens-of-barrowcleft", "citizens-of-brightstone", "citizens-of-charhollow", "citizens-of-charterhall", "citizens-of-coalridge", "citizens-of-crows-foot", "citizens-of-dunslough", "citizens-of-nightmarket", "citizens-of-silkshore", "citizens-of-six-towers", "citizens-of-the-docks", "citizens-of-whitecrown"],
       "enemies": ["the-red-sashes", "spirit-wardens"],
       "npcs": [
         { "name": "Eisele", "role": "Leader (serene, knowledgeable, fearless)" },
@@ -551,7 +637,9 @@
       "tags": { "Spirit": 3, "Occult": 3, "Muscle": 4, "Sorcery": 2, "Illegal": 4, "Poor": 2, "Criminal": 2 },
       "allies": [],
       "enemies": ["spirit-wardens", "bluecoats"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "A mass of hollows, all united in some fell purpose, controlled by an unknown power.",
       "notes": "No fixed turf — moves through the city as a roving threat."
     },
@@ -564,7 +652,9 @@
       "tags": { "Military": 5, "Government": 4, "Muscle": 5, "Rich": 4, "Legal": 5 },
       "allies": ["ministry-of-preservation", "the-silver-nails"],
       "enemies": ["bluecoats", "city-council", "the-grinders", "skovlander-refugees", "ulf-ironborn"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The armed forces of the Imperium stationed in Doskvol. Garrisons are posted at Gaddoc Rail Station, aboard the naval destroyer Paragon, and at the Lord Governor's stronghold (about 250 troops in total)."
     },
     {
@@ -576,7 +666,9 @@
       "tags": { "Labor": 3, "Information": 5, "Investigation": 4, "Politics": 3, "Legal": 4, "Modest": 2, "Grey": 2 },
       "allies": [],
       "enemies": ["the-unseen"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The journalists, muckrakers, and newspaper publishers of Doskvol."
     },
     {
@@ -588,7 +680,9 @@
       "tags": { "Law": 5, "Government": 3, "Investigation": 5, "Legal": 5, "Modest": 3 },
       "allies": ["the-gray-cloaks", "the-red-sashes"],
       "enemies": ["city-council", "the-crows", "lord-scurlock", "the-wraiths"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The criminal investigators of the City Watch. They have a reputation for ethics and integrity (no one likes them). They present evidence for prosecutions to the city magistrates."
     },
     {
@@ -600,7 +694,9 @@
       "tags": { "Law": 4, "Government": 3, "Criminal": 3, "Muscle": 3, "Legal": 4, "Grey": 3, "Modest": 2 },
       "allies": ["bluecoats", "the-lampblacks", "the-unseen"],
       "enemies": ["deathlands-scavengers"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Where many scoundrels spend the bulk of their lives. Several criminal organizations are run by convicts inside its walls."
     },
     {
@@ -612,7 +708,9 @@
       "tags": { "Foreign": 5, "Government": 4, "Noble": 3, "Politics": 4, "Rich": 4, "Legal": 5 },
       "allies": ["the-red-sashes"],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Diplomatic mission of the Iruvian Empire in Doskvol."
     },
     {
@@ -624,7 +722,9 @@
       "tags": { "Labor": 5, "Industry": 3, "Poor": 3, "Legal": 4, "Modest": 1 },
       "allies": ["the-lost"],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The general workforce of the city — factory hands, eelery workers, mill operators, and field hands."
     },
     {
@@ -681,7 +781,7 @@
       "hold": "weak",
       "districts": ["coalridge", "dunslough"],
       "tags": { "Criminal": 3, "Muscle": 4, "Illegal": 3, "Grey": 3, "Poor": 3 },
-      "allies": ["laborers", "the-crows"],
+      "allies": ["laborers", "the-crows", "citizens-of-coalridge", "citizens-of-dunslough"],
       "enemies": ["bluecoats", "the-billhooks"],
       "npcs": [
         { "name": "Cortland", "role": "Leader (idealist, candid, cavalier)" }
@@ -722,7 +822,9 @@
       "tags": { "Religious": 4, "Academic": 3, "Occult": 5, "Sorcery": 5, "Grey": 4, "Spirit": 2, "Modest": 3, "Illegal": 3 },
       "allies": ["the-circle-of-flame", "the-red-sashes", "the-reconciled"],
       "enemies": ["the-church-of-ecstasy", "leviathan-hunters", "spirit-wardens", "sparkwrights"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "A mystery cult that borders on open rebellion against spirit laws. They revere the ancients, and seek to gain knowledge from the past — including consorting with ghosts.",
       "notes": "Operates secretly across the city; no public turf."
     },
@@ -735,7 +837,9 @@
       "tags": { "Labor": 4, "Transport": 4, "Muscle": 4, "Legal": 4, "Modest": 2 },
       "allies": ["ministry-of-preservation"],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The men and women who protect the electro-trains of the Imperium from the savage spirits of the deathlands. Have recently been making noises about forming a union."
     },
     {
@@ -747,7 +851,9 @@
       "tags": { "Spirit": 5, "Occult": 4, "Sorcery": 4, "Politics": 3, "Illegal": 4 },
       "allies": ["city-council", "gondoliers", "the-path-of-echoes"],
       "enemies": ["the-church-of-ecstasy", "spirit-wardens", "sparkwrights", "the-dimmer-sisters"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "An association of ancient spirits who have not gone feral with the passage of time.",
       "turf": "None.",
       "assets": "Several secret and hidden spirit wells across the city and in the deathlands, which give the Reconciled the arcane energy they need to survive.",
@@ -789,7 +895,9 @@
       "tags": { "Labor": 4, "Military": 2, "Transport": 4, "Muscle": 2, "Legal": 4, "Modest": 2, "Grey": 2 },
       "allies": ["the-crows", "leviathan-hunters", "the-silver-nails"],
       "enemies": ["the-grinders"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "The captains and crews for merchant and Imperial Navy ships."
     },
     {
@@ -823,7 +931,9 @@
       "tags": { "Labor": 4, "Information": 3, "Poor": 3, "Legal": 4, "Modest": 1 },
       "allies": [],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Domestic servants in the great houses of the city's elite. A quiet but well-placed gossip network."
     },
     {
@@ -835,7 +945,9 @@
       "tags": { "Foreign": 5, "Government": 3, "Politics": 2, "Legal": 4, "Modest": 2 },
       "allies": ["the-silver-nails"],
       "enemies": [],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Diplomatic mission of Severos in Doskvol."
     },
     {
@@ -870,7 +982,9 @@
       "tags": { "Foreign": 5, "Government": 4, "Politics": 4, "Legal": 4, "Modest": 3 },
       "allies": ["skovlander-refugees"],
       "enemies": ["the-silver-nails", "imperial-military"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Diplomatic mission of Skovlan in Doskvol — strained after the Unity War."
     },
     {
@@ -882,7 +996,9 @@
       "tags": { "Foreign": 5, "Criminal": 2, "Poor": 4, "Grey": 3 },
       "allies": ["skovlan-consulate", "ulf-ironborn"],
       "enemies": ["imperial-military", "the-silver-nails"],
-      "npcs": [],
+      "npcs": [
+
+      ],
       "summary": "Desperate survivors of the Unity War, forced to criminal opportunities when denied all others."
     },
     {
@@ -930,7 +1046,7 @@
       "districts": ["charhollow"],
       "tags": { "Criminal": 4, "Foreign": 4, "Muscle": 4, "Illegal": 5, "Poor": 3 },
       "allies": ["the-grinders", "skovlander-refugees"],
-      "enemies": ["the-billhooks"],
+      "enemies": ["the-billhooks", "citizens-of-coalridge"],
       "npcs": [
         { "name": "Ulf Ironborn", "role": "Leader (ruthless, savage, bold)" },
         { "name": "Havid", "role": "Second (ruthless, volatile, shrewd)" }
