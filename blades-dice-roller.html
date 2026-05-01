@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blades in the Dark — Dice Roller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d0b0a;
+    color: #c9b99a;
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 3rem;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #d4a853;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    color: #6b5f4e;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .panel {
+    background: #13100e;
+    border: 1px solid #2e2620;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 480px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: #6b5f4e;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .dice-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 0.5rem;
+  }
+
+  .dice-btn, .zero-btn {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dice-btn {
+    background: #1a1612;
+    border: 1px solid #2e2620;
+    color: #7a6d5e;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .dice-btn:hover, .dice-btn:focus {
+    border-color: #d4a853;
+    color: #d4a853;
+    background: #1e1a14;
+    outline: none;
+  }
+
+  .dice-btn.selected {
+    background: #2a1f0d;
+    border-color: #d4a853;
+    color: #d4a853;
+    box-shadow: 0 0 8px rgba(212,168,83,0.2);
+  }
+
+  .zero-btn {
+    background: #100e0c;
+    border: 1px solid #1e1a15;
+    color: #3d342a;
+    font-size: 0.85rem;
+  }
+
+  .zero-btn:hover, .zero-btn:focus { color: #8b6f45; border-color: #3d342a; outline: none; }
+  .zero-btn.selected { color: #8b6f45; border-color: #4a3d2a; background: #181410; }
+
+  .roll-btn {
+    width: 100%;
+    max-width: 480px;
+    padding: 0.9rem;
+    background: #1e1710;
+    border: 1px solid #d4a853;
+    color: #d4a853;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    margin-bottom: 1.2rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .roll-btn:hover:not(:disabled), .roll-btn:focus:not(:disabled) {
+    background: #2a1f0d;
+    box-shadow: 0 0 16px rgba(212,168,83,0.25);
+    outline: none;
+  }
+
+  .roll-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .roll-btn:active:not(:disabled) { transform: scale(0.98); }
+
+  .result-panel {
+    background: #13100e;
+    border: 1px solid #2e2620;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 480px;
+    padding: 1.5rem;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dice-results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .die-face {
+    width: 52px;
+    height: 52px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border: 1px solid #2e2620;
+    background: #1a1612;
+    color: #5a5047;
+    animation: rollIn 0.35s ease forwards;
+    opacity: 0;
+  }
+
+  .die-face.value-6 {
+    background: #1f2a0f;
+    border-color: #4a7c20;
+    color: #7dc832;
+    box-shadow: 0 0 10px rgba(125,200,50,0.2);
+  }
+
+  .die-face.value-5, .die-face.value-4 {
+    background: #2a1f0d;
+    border-color: #7a5820;
+    color: #d4a853;
+  }
+
+  .die-face.value-3, .die-face.value-2, .die-face.value-1 {
+    background: #1a0f0f;
+    border-color: #4a1f1f;
+    color: #8b3333;
+  }
+
+  .die-face.highlight {
+    box-shadow: 0 0 14px rgba(125,200,50,0.4);
+    transform: scale(1.08);
+    border-width: 2px;
+  }
+
+  .die-face.highlight.value-4, .die-face.highlight.value-5 {
+    box-shadow: 0 0 14px rgba(212,168,83,0.4);
+  }
+
+  .die-face.highlight.value-1,
+  .die-face.highlight.value-2,
+  .die-face.highlight.value-3 {
+    box-shadow: 0 0 14px rgba(139,51,51,0.4);
+  }
+
+  @keyframes rollIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .outcome-label {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+    text-align: center;
+  }
+
+  .outcome-crit    { color: #a8e03a; }
+  .outcome-success { color: #d4a853; }
+  .outcome-partial { color: #d4853a; }
+  .outcome-fail    { color: #8b3333; }
+
+  .outcome-desc {
+    font-size: 0.95rem;
+    color: #6b5f4e;
+    font-style: italic;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .empty-state {
+    color: #3d342a;
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .chance-note {
+    font-size: 0.7rem;
+    color: #4a3d2a;
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-family: 'Cinzel', serif;
+    min-height: 1em;
+  }
+</style>
+</head>
+<body>
+
+<h1>Blades in the Dark</h1>
+<div class="subtitle">Action Roll</div>
+
+<div class="panel">
+  <div class="section-label">Dice Pool</div>
+  <div class="dice-grid" id="diceGrid"></div>
+  <div class="chance-note" id="chanceNote"></div>
+</div>
+
+<button class="roll-btn" id="rollBtn" disabled onclick="roll()">Roll the Dice</button>
+
+<div class="result-panel" id="resultPanel">
+  <div class="empty-state">Select your dice pool above</div>
+</div>
+
+<script>
+  let selected = null;
+
+  const outcomes = {
+    crit:    { label: 'Critical Success', cls: 'outcome-crit',    desc: 'You do it with exceptional effect. Take a bonus.' },
+    success: { label: 'Full Success',     cls: 'outcome-success', desc: 'You do it. Clean and simple.' },
+    partial: { label: 'Partial Success',  cls: 'outcome-partial', desc: 'You do it, but there\'s a complication or reduced effect.' },
+    fail:    { label: 'Bad Outcome',      cls: 'outcome-fail',    desc: 'Things go wrong. Brace for consequences.' }
+  };
+
+  function select(n) {
+    selected = n;
+    document.querySelectorAll('.dice-btn, .zero-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('btn-' + n).classList.add('selected');
+    document.getElementById('rollBtn').disabled = false;
+    const note = document.getElementById('chanceNote');
+    if (n === 0) note.textContent = 'Rolling 2d6, keeping lowest';
+    else if (n === 1) note.textContent = 'Rolling 1 die — no comparison';
+    else note.textContent = 'Keeping highest of ' + n + 'd6';
+    document.getElementById('resultPanel').innerHTML = '<div class="empty-state">Ready — roll when you dare</div>';
+  }
+
+  function getResult(value) {
+    if (value === 6) return 'success';
+    if (value >= 4) return 'partial';
+    return 'fail';
+  }
+
+  function renderDice(rolls, highlightIdx) {
+    return rolls.map((r, i) => {
+      let cls = 'die-face value-' + r;
+      if (i === highlightIdx) cls += ' highlight';
+      return `<div class="${cls}" style="animation-delay:${i * 80}ms">${r}</div>`;
+    }).join('');
+  }
+
+  function renderOutcome(key) {
+    const o = outcomes[key];
+    return `<div class="outcome-label ${o.cls}">${o.label}</div><div class="outcome-desc">${o.desc}</div>`;
+  }
+
+  function roll() {
+    if (selected === null) return;
+    const panel = document.getElementById('resultPanel');
+
+    if (selected === 0) {
+      const d1 = Math.ceil(Math.random() * 6);
+      const d2 = Math.ceil(Math.random() * 6);
+      const lowest = Math.min(d1, d2);
+      const lowestIdx = d1 <= d2 ? 0 : 1;
+      const result = getResult(lowest);
+      panel.innerHTML =
+        '<div class="dice-results">' + renderDice([d1, d2], lowestIdx) + '</div>' +
+        renderOutcome(result);
+    } else {
+      const rolls = Array.from({ length: selected }, () => Math.ceil(Math.random() * 6));
+      const max = Math.max(...rolls);
+      const highestIdx = rolls.lastIndexOf(max);
+      const sixCount = rolls.filter(r => r === 6).length;
+      const isCrit = selected > 1 && sixCount >= 2;
+      const result = isCrit ? 'crit' : getResult(max);
+      panel.innerHTML =
+        '<div class="dice-results">' + renderDice(rolls, highestIdx) + '</div>' +
+        renderOutcome(result);
+    }
+  }
+
+  // Build dice grid
+  const grid = document.getElementById('diceGrid');
+
+  const zeroBtn = document.createElement('button');
+  zeroBtn.className = 'zero-btn';
+  zeroBtn.id = 'btn-0';
+  zeroBtn.textContent = '0';
+  zeroBtn.setAttribute('aria-label', 'Zero dice — roll 2, keep lowest');
+  zeroBtn.onclick = () => select(0);
+  grid.appendChild(zeroBtn);
+
+  for (let i = 1; i <= 6; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'dice-btn';
+    btn.id = 'btn-' + i;
+    btn.textContent = i;
+    btn.setAttribute('aria-label', i + ' dice');
+    btn.onclick = () => select(i);
+    grid.appendChild(btn);
+  }
+</script>
+</body>
+</html>

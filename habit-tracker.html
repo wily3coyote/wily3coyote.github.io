@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Habit Tracker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1915;
+    --border: #2e2c27;
+    --accent: #e8c84a;
+    --accent2: #7ecfa4;
+    --text: #f0ebe0;
+    --muted: #6b6557;
+    --checked-bg: #1e2b22;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    color: var(--accent);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  .month-nav button {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .month-nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+  #month-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    min-width: 160px;
+    text-align: center;
+  }
+
+  .habits-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .habits-header span {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  #add-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  #add-btn:hover { opacity: 0.85; }
+
+  .habit-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .habit-row:hover { border-color: #3e3c35; }
+
+  .habit-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px 8px;
+  }
+
+  .habit-name {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    outline: none;
+    min-width: 0;
+  }
+  .habit-name::placeholder { color: var(--muted); }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color 0.15s;
+    line-height: 1;
+  }
+  .delete-btn:hover { color: #e87a4a; }
+
+  .progress-bar-wrap {
+    height: 2px;
+    background: var(--border);
+    margin: 0 14px;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent2);
+    transition: width 0.3s ease;
+    border-radius: 1px;
+  }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 10px 14px 12px;
+  }
+
+  .day-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .day-num {
+    font-size: 0.55rem;
+    color: var(--muted);
+    line-height: 1;
+  }
+
+  .day-check {
+    width: 28px; height: 28px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.12s;
+    color: transparent;
+    font-size: 0.8rem;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .day-check:hover { border-color: var(--accent2); }
+  .day-check.done {
+    background: var(--checked-bg);
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  .habit-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 14px 8px;
+  }
+  .habit-count {
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+  .habit-count span { color: var(--accent2); }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+  .empty-state strong { color: var(--text); display: block; font-size: 1.1rem; margin-bottom: 4px; }
+
+  /* Add habit modal */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    padding: 24px;
+    width: 100%;
+    max-width: 480px;
+  }
+  .modal h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+  .modal input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    outline: none;
+    margin-bottom: 12px;
+  }
+  .modal input:focus { border-color: var(--accent); }
+  .modal-btns { display: flex; gap: 10px; }
+  .modal-btns button {
+    flex: 1; padding: 10px;
+    border-radius: 8px; border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  #modal-cancel { background: var(--border); color: var(--muted); }
+  #modal-save { background: var(--accent); color: var(--bg); font-weight: 500; }
+
+  .summary-bar {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .summary-bar strong { color: var(--accent); font-size: 1.4rem; font-family: 'DM Serif Display', serif; display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Habit <em>Tracker</em></h1>
+  <div class="month-nav">
+    <button id="prev-month">&#8592;</button>
+    <div id="month-label"></div>
+    <button id="next-month">&#8594;</button>
+  </div>
+</header>
+
+<div class="habits-header">
+  <span>Your habits</span>
+  <button id="add-btn">+ Add habit</button>
+</div>
+
+<div id="habits-list"></div>
+
+<div class="summary-bar" id="summary"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h2>New Habit</h2>
+    <input type="text" id="habit-input" placeholder="e.g. Drink 8 glasses of water" maxlength="50" />
+    <div class="modal-btns">
+      <button id="modal-cancel">Cancel</button>
+      <button id="modal-save">Add</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  let currentDate = new Date();
+  let viewYear = currentDate.getFullYear();
+  let viewMonth = currentDate.getMonth();
+
+  function storageKey() {
+    return `habits_${viewYear}_${viewMonth}`;
+  }
+
+  function habitListKey() {
+    return 'habit_names';
+  }
+
+  function load() {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey()) || '{}');
+    } catch { return {}; }
+  }
+
+  function save(data) {
+    localStorage.setItem(storageKey(), JSON.stringify(data));
+  }
+
+  function loadHabits() {
+    try {
+      return JSON.parse(localStorage.getItem(habitListKey()) || '[]');
+    } catch { return []; }
+  }
+
+  function saveHabits(habits) {
+    localStorage.setItem(habitListKey(), JSON.stringify(habits));
+  }
+
+  function daysInMonth(y, m) {
+    return new Date(y, m + 1, 0).getDate();
+  }
+
+  function render() {
+    document.getElementById('month-label').textContent = `${MONTHS[viewMonth]} ${viewYear}`;
+    const habits = loadHabits();
+    const data = load();
+    const days = daysInMonth(viewYear, viewMonth);
+    const list = document.getElementById('habits-list');
+    list.innerHTML = '';
+
+    if (habits.length === 0) {
+      list.innerHTML = `<div class="empty-state"><strong>No habits yet</strong>Tap "+ Add habit" to start tracking.</div>`;
+      document.getElementById('summary').innerHTML = '';
+      return;
+    }
+
+    let totalChecked = 0, totalPossible = 0;
+
+    habits.forEach((habit, hi) => {
+      const row = document.createElement('div');
+      row.className = 'habit-row';
+
+      const checkedDays = (data[hi] || []).length;
+      const pct = Math.round((checkedDays / days) * 100);
+      totalChecked += checkedDays;
+      totalPossible += days;
+
+      let daysHTML = '';
+      for (let d = 1; d <= days; d++) {
+        const checked = (data[hi] || []).includes(d);
+        daysHTML += `
+          <div class="day-cell">
+            <span class="day-num">${d}</span>
+            <div class="day-check ${checked ? 'done' : ''}" data-habit="${hi}" data-day="${d}">✓</div>
+          </div>`;
+      }
+
+      row.innerHTML = `
+        <div class="habit-top">
+          <input class="habit-name" value="${escapeHTML(habit)}" data-hi="${hi}" placeholder="Habit name" />
+          <button class="delete-btn" data-hi="${hi}" title="Remove">✕</button>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+        <div class="days-grid">${daysHTML}</div>
+        <div class="habit-footer"><span class="habit-count"><span>${checkedDays}</span>/${days} days</span></div>
+      `;
+      list.appendChild(row);
+    });
+
+    const overallPct = totalPossible ? Math.round((totalChecked / totalPossible) * 100) : 0;
+    document.getElementById('summary').innerHTML = `<strong>${overallPct}%</strong>overall completion this month`;
+
+    // Events
+    list.querySelectorAll('.day-check').forEach(el => {
+      el.addEventListener('click', () => {
+        const hi = +el.dataset.habit;
+        const day = +el.dataset.day;
+        const d = load();
+        if (!d[hi]) d[hi] = [];
+        const idx = d[hi].indexOf(day);
+        if (idx === -1) d[hi].push(day);
+        else d[hi].splice(idx, 1);
+        save(d);
+        render();
+      });
+    });
+
+    list.querySelectorAll('.delete-btn').forEach(el => {
+      el.addEventListener('click', () => {
+        const hi = +el.dataset.hi;
+        if (!confirm('Remove this habit?')) return;
+        const habits = loadHabits();
+        habits.splice(hi, 1);
+        saveHabits(habits);
+        // Reindex data
+        const d = load();
+        const newD = {};
+        Object.keys(d).forEach(k => {
+          const ki = +k;
+          if (ki < hi) newD[ki] = d[ki];
+          else if (ki > hi) newD[ki - 1] = d[ki];
+        });
+        save(newD);
+        render();
+      });
+    });
+
+    list.querySelectorAll('.habit-name').forEach(el => {
+      el.addEventListener('change', () => {
+        const hi = +el.dataset.hi;
+        const habits = loadHabits();
+        habits[hi] = el.value.trim() || habits[hi];
+        saveHabits(habits);
+      });
+    });
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // Month nav
+  document.getElementById('prev-month').addEventListener('click', () => {
+    viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } render();
+  });
+  document.getElementById('next-month').addEventListener('click', () => {
+    viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } render();
+  });
+
+  // Modal
+  const modal = document.getElementById('modal-overlay');
+  document.getElementById('add-btn').addEventListener('click', () => {
+    document.getElementById('habit-input').value = '';
+    modal.classList.add('open');
+    setTimeout(() => document.getElementById('habit-input').focus(), 100);
+  });
+  document.getElementById('modal-cancel').addEventListener('click', () => modal.classList.remove('open'));
+  document.getElementById('modal-save').addEventListener('click', () => {
+    const val = document.getElementById('habit-input').value.trim();
+    if (!val) return;
+    const habits = loadHabits();
+    habits.push(val);
+    saveHabits(habits);
+    modal.classList.remove('open');
+    render();
+  });
+  document.getElementById('habit-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('modal-save').click();
+    if (e.key === 'Escape') modal.classList.remove('open');
+  });
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+
+  render();
+</script>
+</body>
+</html>
