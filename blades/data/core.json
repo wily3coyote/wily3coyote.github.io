@@ -252,7 +252,7 @@
       "tier": 3,
       "hold": "strong",
       "districts": ["six-towers"],
-      "tags": { "Noble": 4, "Criminal": 3, "Occult": 4, "Vice": 3, "Information": 4, "Luxury": 3, "Politics": 4, "Rich": 5, "Grey": 4 },
+      "tags": { "Academic": 4 ,"Noble": 4, "Criminal": 3, "Occult": 4, "Vice": 3, "Information": 4, "Luxury": 3, "Politics": 4, "Rich": 5, "Grey": 4 },
       "allies": ["the-forgotten-gods", "the-path-of-echoes", "city-council", "the-foundation"],
       "enemies": ["the-hive", "the-silver-nails"],
       "npcs": [

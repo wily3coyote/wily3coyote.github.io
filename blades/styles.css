@@ -423,7 +423,108 @@ a.tag:hover {
   white-space: pre-wrap;
 }
 
+/* ---- Map view ---- */
+
+.map-wrap {
+  margin: -1rem -1.1rem 0;
+  background: #000;
+  position: relative;
+}
+.map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.map-region {
+  cursor: pointer;
+  outline: none;
+}
+.map-poly {
+  fill: rgb(201 160 99);
+  fill-opacity: 0;
+  stroke: rgb(201 160 99);
+  stroke-opacity: 0.45;
+  stroke-width: 1.5;
+  transition: fill-opacity 120ms ease, stroke-opacity 120ms ease;
+}
+.map-region:hover .map-poly,
+.map-region:focus .map-poly,
+.map-region:active .map-poly {
+  fill-opacity: 0.3;
+  stroke-opacity: 1;
+}
+
+.map-label {
+  display: none;
+  fill: #fff;
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  paint-order: stroke;
+  stroke: #000;
+  stroke-width: 5;
+  pointer-events: none;
+}
+.map-region:hover .map-label,
+.map-region:focus .map-label,
+.map-region:active .map-label {
+  display: block;
+}
+
+.map-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  color: var(--danger);
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 0.95rem;
+}
+
+.map-districts-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0.7rem auto 0.25rem;
+  padding: 0.4rem 1rem;
+  width: max-content;
+  max-width: 100%;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+}
+.map-districts-link::after {
+  content: "→";
+  color: var(--fg-dim);
+  font-size: 0.95em;
+  transition: transform 120ms ease, color 120ms ease;
+}
+.map-districts-link:hover {
+  border-color: var(--accent);
+  background: var(--bg-alt);
+  text-decoration: none;
+}
+.map-districts-link:hover::after {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
 @media (min-width: 600px) {
   main { padding: 1.5rem 1.25rem 5.5rem; }
   .faction-name { font-size: 2.1rem; }
+  .map-wrap { margin: -1.5rem -1.25rem 0; }
 }

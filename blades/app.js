@@ -12,6 +12,8 @@
   let ALL_DISTRICT_IDS = [];
   let ALL_TIERS = [];
   let lastViewKey = null;
+  let SHAPES_PROMISE = null; // lazy: only loaded when map view is opened
+  const SVG_NS = "http://www.w3.org/2000/svg";
 
   // ---------- Load & prep ----------
 
@@ -255,6 +257,92 @@
     const li = el("li");
     li.appendChild(link);
     return li;
+  }
+
+  // ---------- Map view ----------
+
+  function loadShapes() {
+    if (!SHAPES_PROMISE) {
+      SHAPES_PROMISE = fetch("data/districts-shape.json")
+        .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+    }
+    return SHAPES_PROMISE;
+  }
+
+  function renderMap() {
+    const app = document.getElementById("app");
+    app.innerHTML = "";
+
+    const wrap = el("div", { cls: "map-wrap" });
+    const svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("class", "map-svg");
+    svg.setAttribute("viewBox", "0 0 1017 1546");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg.setAttribute("aria-label", "Doskvol districts map");
+
+    const img = document.createElementNS(SVG_NS, "image");
+    img.setAttribute("href", "data/map.png");
+    img.setAttribute("width", "1017");
+    img.setAttribute("height", "1546");
+    img.setAttribute("preserveAspectRatio", "none");
+    svg.appendChild(img);
+
+    const overlay = document.createElementNS(SVG_NS, "g");
+    overlay.setAttribute("class", "map-overlay");
+    svg.appendChild(overlay);
+
+    wrap.appendChild(svg);
+    app.appendChild(wrap);
+
+    const districtsLink = el("a", {
+      cls: "map-districts-link",
+      href: "#/districts",
+      text: "Districts"
+    });
+    app.appendChild(districtsLink);
+
+    loadShapes()
+      .then(shapes => {
+        for (const [id, shape] of Object.entries(shapes)) {
+          if (!shape || !Array.isArray(shape.points) || shape.points.length < 3) continue;
+          const d = DISTRICT_BY_ID[id];
+          const region = document.createElementNS(SVG_NS, "g");
+          region.setAttribute("class", "map-region");
+          region.setAttribute("tabindex", "0");
+          region.setAttribute("role", "link");
+          region.setAttribute("aria-label", d ? d.name : id);
+
+          const poly = document.createElementNS(SVG_NS, "polygon");
+          poly.setAttribute("points", shape.points.map(p => p.join(",")).join(" "));
+          poly.setAttribute("class", "map-poly");
+          poly.setAttribute("vector-effect", "non-scaling-stroke");
+          // Defensive defaults so the map shows through even if CSS is stale.
+          poly.setAttribute("fill-opacity", "0");
+          region.appendChild(poly);
+
+          let cx = 0, cy = 0;
+          for (const [x, y] of shape.points) { cx += x; cy += y; }
+          cx /= shape.points.length; cy /= shape.points.length;
+          const text = document.createElementNS(SVG_NS, "text");
+          text.setAttribute("x", cx);
+          text.setAttribute("y", cy);
+          text.setAttribute("class", "map-label");
+          text.setAttribute("display", "none"); // hover toggles to "inline" via CSS
+          text.textContent = d ? d.name : id;
+          region.appendChild(text);
+
+          const go = () => { location.hash = "#/district/" + id; };
+          region.addEventListener("click", go);
+          region.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+          });
+          overlay.appendChild(region);
+        }
+      })
+      .catch(err => {
+        const note = el("div", { cls: "map-error", text: "Couldn't load district shapes: " + err.message });
+        wrap.appendChild(note);
+      });
   }
 
   // ---------- Name search view ----------
@@ -665,7 +753,8 @@
     if (hash.startsWith("#/faction/")) return "faction";
     if (hash === "#/tags" || hash.startsWith("#/tags/") || hash.startsWith("#/tags?")) return "tags";
     if (hash === "#/districts" || hash.startsWith("#/district/")) return "districts";
-    return "name";
+    if (hash === "#/name") return "name";
+    return "map";
   }
 
   function updateNav(viewKey) {
@@ -688,8 +777,10 @@
       renderDistrictList();
     } else if (hash === "#/tags" || hash.startsWith("#/tags/") || hash.startsWith("#/tags?")) {
       renderTags(parseBrowseHash(hash.slice("#/tags".length)));
-    } else {
+    } else if (hash === "#/name") {
       renderSearch();
+    } else {
+      renderMap();
     }
 
     // Scroll to top on view change or whenever we land on a new detail page.
@@ -697,8 +788,8 @@
     if (isDetail || viewKey !== lastViewKey) window.scrollTo(0, 0);
     lastViewKey = viewKey;
 
-    // Faction detail isn't tied to a tab; everything else highlights its tab.
-    updateNav(viewKey === "faction" ? null : viewKey);
+    // Faction and district detail aren't tied to a tab; everything else highlights its tab.
+    updateNav(viewKey === "faction" || viewKey === "districts" ? null : viewKey);
   }
 
   // ---------- Init ----------
