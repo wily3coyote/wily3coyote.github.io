@@ -397,6 +397,66 @@ a.tag.tag-or .tag-weight { color: var(--or); }
 .npc:last-child { border-bottom: none; }
 .npc-name { font-weight: 600; color: var(--fg); }
 .npc-role { color: var(--fg-muted); font-size: 0.92rem; }
+.npc-traits { color: var(--fg-dim); font-size: 0.88rem; font-style: italic; }
+
+/* ---- District expanded details (folded) ---- */
+
+.district-details > .district-description {
+  margin-top: 0.4rem;
+  color: var(--fg-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.district-details .subsection {
+  margin-top: 1rem;
+}
+.district-details .subsection-h {
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  color: var(--fg-dim);
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+.landmarks { list-style: none; padding: 0; margin: 0.25rem 0; }
+.landmark { padding: 0.4rem 0; border-bottom: 1px dotted var(--border); line-height: 1.5; }
+.landmark:last-child { border-bottom: none; }
+.landmark-name { font-family: var(--serif); font-weight: 600; color: var(--fg); }
+.landmark-desc { color: var(--fg-muted); font-size: 0.92rem; }
+
+.trait-line { margin: 0.3rem 0; color: var(--fg-muted); font-size: 0.92rem; line-height: 1.5; }
+.trait-label { color: var(--fg-dim); font-weight: 600; letter-spacing: 0.04em; }
+
+.indicators .indicator-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.25rem 0;
+  font-size: 0.92rem;
+  color: var(--fg-muted);
+}
+.indicator-label {
+  flex: 1;
+  letter-spacing: 0.02em;
+}
+.indicator-dots {
+  display: inline-flex;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+.indicator-dots .dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  display: inline-block;
+}
+.indicator-dots .dot.dot-on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
 
 .related {
   display: flex;
@@ -475,25 +535,6 @@ a.tag.tag-or .tag-weight { color: var(--or); }
 .map-region:active .map-poly {
   fill-opacity: 0.3;
   stroke-opacity: 1;
-}
-
-.map-label {
-  display: none;
-  fill: #fff;
-  font-family: var(--serif);
-  font-size: 36px;
-  font-weight: 600;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  paint-order: stroke;
-  stroke: #000;
-  stroke-width: 5;
-  pointer-events: none;
-}
-.map-region:hover .map-label,
-.map-region:focus .map-label,
-.map-region:active .map-label {
-  display: block;
 }
 
 .map-error {

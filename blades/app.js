@@ -351,17 +351,6 @@
           poly.setAttribute("fill-opacity", "0");
           region.appendChild(poly);
 
-          let cx = 0, cy = 0;
-          for (const [x, y] of shape.points) { cx += x; cy += y; }
-          cx /= shape.points.length; cy /= shape.points.length;
-          const text = document.createElementNS(SVG_NS, "text");
-          text.setAttribute("x", cx);
-          text.setAttribute("y", cy);
-          text.setAttribute("class", "map-label");
-          text.setAttribute("display", "none"); // hover toggles to "inline" via CSS
-          text.textContent = d ? d.name : id;
-          region.appendChild(text);
-
           const go = () => { location.hash = "#/district/" + id; };
           region.addEventListener("click", go);
           region.addEventListener("keydown", e => {
@@ -751,20 +740,6 @@
 
     if (d.summary) app.appendChild(el("p", { cls: "faction-summary", text: d.summary }));
 
-    if (d.notable_locations && d.notable_locations.length) {
-      const sec = el("section", { cls: "section" });
-      sec.appendChild(el("h3", { cls: "section-h", text: "Notable locations" }));
-      sec.appendChild(el("p", { text: d.notable_locations.join(", ") }));
-      app.appendChild(sec);
-    }
-
-    if (d.notes) {
-      const sec = el("section", { cls: "section" });
-      sec.appendChild(el("h3", { cls: "section-h", text: "Notes" }));
-      sec.appendChild(el("p", { text: d.notes }));
-      app.appendChild(sec);
-    }
-
     const sortFactions = arr => arr.slice().sort(
       (a, b) => (b.tier || 0) - (a.tier || 0) || compareByName(a, b)
     );
@@ -801,6 +776,117 @@
       det.appendChild(ul);
       app.appendChild(det);
     }
+
+    renderDistrictDetails(app, d);
+  }
+
+  function renderDistrictDetails(app, d) {
+    const hasContent = d.description || (d.landmarks && d.landmarks.length)
+      || d.scene || d.streets || d.buildings
+      || (d.npcs && d.npcs.length) || d.special_rule;
+    if (!hasContent) return;
+
+    const det = el("details", { cls: "section section-collapsible district-details" });
+    det.appendChild(el("summary", {
+      cls: "section-h section-h-toggle",
+      text: "More about this district"
+    }));
+
+    if (d.description) {
+      det.appendChild(el("p", { cls: "district-description", text: d.description }));
+    }
+
+    if (d.indicators) {
+      det.appendChild(buildIndicators(d.indicators));
+    }
+
+    if (d.landmarks && d.landmarks.length) {
+      const sec = el("div", { cls: "subsection" });
+      sec.appendChild(el("h4", { cls: "subsection-h", text: "Landmarks" }));
+      const ul = el("ul", { cls: "landmarks" });
+      for (const l of d.landmarks) {
+        const li = el("li", { cls: "landmark" });
+        li.appendChild(el("span", { cls: "landmark-name", text: l.name }));
+        if (l.description) {
+          li.appendChild(document.createTextNode(" — "));
+          li.appendChild(el("span", { cls: "landmark-desc", text: l.description }));
+        }
+        ul.appendChild(li);
+      }
+      sec.appendChild(ul);
+      det.appendChild(sec);
+    }
+
+    if (d.scene || d.streets || d.buildings) {
+      const sec = el("div", { cls: "subsection" });
+      sec.appendChild(el("h4", { cls: "subsection-h", text: "Atmosphere" }));
+      const traitLine = (label, body) => {
+        if (!body) return null;
+        const p = el("p", { cls: "trait-line" });
+        p.appendChild(el("span", { cls: "trait-label", text: label + ": " }));
+        p.appendChild(document.createTextNode(body));
+        return p;
+      };
+      const sceneEl = traitLine("Scene", d.scene);
+      const streetsEl = traitLine("Streets", d.streets);
+      const buildingsEl = traitLine("Buildings", d.buildings);
+      if (sceneEl) sec.appendChild(sceneEl);
+      if (streetsEl) sec.appendChild(streetsEl);
+      if (buildingsEl) sec.appendChild(buildingsEl);
+      det.appendChild(sec);
+    }
+
+    if (d.npcs && d.npcs.length) {
+      const sec = el("div", { cls: "subsection" });
+      sec.appendChild(el("h4", { cls: "subsection-h", text: "Notable people" }));
+      const ul = el("ul", { cls: "npcs" });
+      for (const n of d.npcs) {
+        const li = el("li", { cls: "npc" });
+        li.appendChild(el("span", { cls: "npc-name", text: n.name }));
+        if (n.role) {
+          li.appendChild(document.createTextNode(" — "));
+          li.appendChild(el("span", { cls: "npc-role", text: n.role }));
+        }
+        if (n.traits) {
+          li.appendChild(document.createTextNode(" "));
+          li.appendChild(el("span", { cls: "npc-traits", text: "(" + n.traits + ")" }));
+        }
+        ul.appendChild(li);
+      }
+      sec.appendChild(ul);
+      det.appendChild(sec);
+    }
+
+    if (d.special_rule) {
+      const sec = el("div", { cls: "subsection" });
+      sec.appendChild(el("h4", { cls: "subsection-h", text: "Special rule" }));
+      sec.appendChild(el("p", { text: d.special_rule }));
+      det.appendChild(sec);
+    }
+
+    app.appendChild(det);
+  }
+
+  function buildIndicators(ind) {
+    const sec = el("div", { cls: "subsection indicators" });
+    sec.appendChild(el("h4", { cls: "subsection-h", text: "Traits" }));
+    const labels = [
+      ["Wealth", ind.wealth],
+      ["Security & Safety", ind.safety],
+      ["Criminal Influence", ind.crime],
+      ["Occult Influence", ind.occult],
+    ];
+    for (const [label, value] of labels) {
+      const row = el("div", { cls: "indicator-row" });
+      row.appendChild(el("span", { cls: "indicator-label", text: label }));
+      const dots = el("span", { cls: "indicator-dots", attrs: { "aria-label": value + " of 4" } });
+      for (let i = 0; i < 4; i++) {
+        dots.appendChild(el("span", { cls: "dot" + (i < value ? " dot-on" : "") }));
+      }
+      row.appendChild(dots);
+      sec.appendChild(row);
+    }
+    return sec;
   }
 
   // ---------- Routing & nav ----------
