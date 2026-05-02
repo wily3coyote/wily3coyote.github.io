@@ -306,6 +306,16 @@ main {
   margin: 0 0 0.5rem;
   font-weight: 600;
 }
+.list-section-h {
+  margin: 1.6rem 0 0.6rem;
+}
+.list-section-h:first-child {
+  margin-top: 0.4rem;
+}
+
+.landmark-description {
+  margin-top: 0.6rem;
+}
 
 /* Collapsible <details>/<summary> styled like a regular section header. */
 details.section-collapsible > summary {
@@ -535,6 +545,31 @@ a.tag.tag-or .tag-weight { color: var(--or); }
 .map-region:active .map-poly {
   fill-opacity: 0.3;
   stroke-opacity: 1;
+}
+
+.map-pin {
+  fill: #000;
+  fill-opacity: 0.5;
+  stroke: var(--accent);
+  stroke-opacity: 0.5;
+  stroke-width: 5.5;
+  transition: fill-opacity 120ms ease, stroke-opacity 120ms ease;
+}
+.map-region-pin:hover .map-pin,
+.map-region-pin:focus .map-pin,
+.map-region-pin:active .map-pin {
+  fill-opacity: 0.55;
+  stroke-opacity: 1;
+}
+.map-pin-dot {
+  fill: var(--accent);
+  fill-opacity: 0.5;
+  transition: fill-opacity 120ms ease;
+}
+.map-region-pin:hover .map-pin-dot,
+.map-region-pin:focus .map-pin-dot,
+.map-region-pin:active .map-pin-dot {
+  fill-opacity: 1;
 }
 
 .map-error {

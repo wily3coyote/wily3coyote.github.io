@@ -23,7 +23,8 @@
     DATA = await res.json();
 
     DATA.districts.forEach(d => { DISTRICT_BY_ID[d.id] = d; });
-    ALL_DISTRICT_IDS = DATA.districts.map(d => d.id);
+    // Wildcard `*` expands to districts only — landmarks are always explicit.
+    ALL_DISTRICT_IDS = DATA.districts.filter(d => d.kind !== "landmark").map(d => d.id);
 
     for (const group of Object.keys(DATA.tags)) {
       for (const t of DATA.tags[group]) TAG_TO_GROUP[t] = group;
@@ -48,7 +49,17 @@
     const exclude = new Set(
       arr.filter(x => typeof x === "string" && x.startsWith("!")).map(x => x.slice(1))
     );
-    return ALL_DISTRICT_IDS.filter(id => !exclude.has(id));
+    const explicit = arr.filter(
+      x => typeof x === "string" && x !== "*" && !x.startsWith("!")
+    );
+    const wildcard = ALL_DISTRICT_IDS.filter(id => !exclude.has(id));
+    // Wildcard sweeps districts; explicit entries (typically landmarks) are layered on.
+    const seen = new Set();
+    const out = [];
+    for (const id of [...wildcard, ...explicit]) {
+      if (!seen.has(id)) { seen.add(id); out.push(id); }
+    }
+    return out;
   }
 
   // ---------- Tag-browse selection ↔ hash ----------
@@ -335,21 +346,40 @@
     loadShapes()
       .then(shapes => {
         for (const [id, shape] of Object.entries(shapes)) {
-          if (!shape || !Array.isArray(shape.points) || shape.points.length < 3) continue;
           const d = DISTRICT_BY_ID[id];
+          const isPin = shape && Array.isArray(shape.point) && shape.point.length === 2;
+          const isPoly = shape && Array.isArray(shape.points) && shape.points.length >= 3;
+          if (!isPin && !isPoly) continue;
+
           const region = document.createElementNS(SVG_NS, "g");
-          region.setAttribute("class", "map-region");
+          region.setAttribute("class", "map-region" + (isPin ? " map-region-pin" : ""));
           region.setAttribute("tabindex", "0");
           region.setAttribute("role", "link");
           region.setAttribute("aria-label", d ? d.name : id);
 
-          const poly = document.createElementNS(SVG_NS, "polygon");
-          poly.setAttribute("points", shape.points.map(p => p.join(",")).join(" "));
-          poly.setAttribute("class", "map-poly");
-          poly.setAttribute("vector-effect", "non-scaling-stroke");
-          // Defensive defaults so the map shows through even if CSS is stale.
-          poly.setAttribute("fill-opacity", "0");
-          region.appendChild(poly);
+          if (isPoly) {
+            const poly = document.createElementNS(SVG_NS, "polygon");
+            poly.setAttribute("points", shape.points.map(p => p.join(",")).join(" "));
+            poly.setAttribute("class", "map-poly");
+            poly.setAttribute("vector-effect", "non-scaling-stroke");
+            poly.setAttribute("fill-opacity", "0");
+            region.appendChild(poly);
+          } else {
+            const [px, py] = shape.point;
+            const pin = document.createElementNS(SVG_NS, "circle");
+            pin.setAttribute("cx", px);
+            pin.setAttribute("cy", py);
+            pin.setAttribute("r", "28");
+            pin.setAttribute("class", "map-pin");
+            region.appendChild(pin);
+
+            const dot = document.createElementNS(SVG_NS, "circle");
+            dot.setAttribute("cx", px);
+            dot.setAttribute("cy", py);
+            dot.setAttribute("r", "10");
+            dot.setAttribute("class", "map-pin-dot");
+            region.appendChild(dot);
+          }
 
           const go = () => { location.hash = "#/district/" + id; };
           region.addEventListener("click", go);
@@ -700,8 +730,10 @@
     app.innerHTML = "";
 
     const sorted = DATA.districts.slice().sort(compareByName);
-    const list = el("ul", { cls: "results" });
-    for (const d of sorted) {
+    const districts = sorted.filter(d => d.kind !== "landmark");
+    const landmarks = sorted.filter(d => d.kind === "landmark");
+
+    const buildRow = d => {
       const link = el("a", { cls: "result", href: "#/district/" + d.id });
       const row = el("div", { cls: "result-row" });
       row.appendChild(el("span", { cls: "result-name", text: d.name }));
@@ -714,9 +746,20 @@
       if (d.summary) link.appendChild(el("span", { cls: "result-summary", text: d.summary }));
       const li = el("li");
       li.appendChild(link);
-      list.appendChild(li);
+      return li;
+    };
+
+    app.appendChild(el("h3", { cls: "section-h list-section-h", text: "Districts" }));
+    const dList = el("ul", { cls: "results" });
+    for (const d of districts) dList.appendChild(buildRow(d));
+    app.appendChild(dList);
+
+    if (landmarks.length) {
+      app.appendChild(el("h3", { cls: "section-h list-section-h", text: "Landmarks" }));
+      const lList = el("ul", { cls: "results" });
+      for (const d of landmarks) lList.appendChild(buildRow(d));
+      app.appendChild(lList);
     }
-    app.appendChild(list);
   }
 
   function renderDistrict(id) {
@@ -740,12 +783,20 @@
 
     if (d.summary) app.appendChild(el("p", { cls: "faction-summary", text: d.summary }));
 
+    // Landmarks render their description inline; districts use the collapsible expander below.
+    if (d.kind === "landmark" && d.description) {
+      app.appendChild(el("p", { cls: "district-description landmark-description", text: d.description }));
+    }
+
     const sortFactions = arr => arr.slice().sort(
       (a, b) => (b.tier || 0) - (a.tier || 0) || compareByName(a, b)
     );
     const all = FACTIONS_BY_DISTRICT_ID[id] || [];
-    const specific = sortFactions(all.filter(f => !f.isCitywide));
-    const citywide = sortFactions(all.filter(f => f.isCitywide));
+    // For landmarks: presence is always explicit (wildcards skip landmarks), so no
+    // citywide split — everyone goes under "operating here".
+    const isLandmark = d.kind === "landmark";
+    const specific = sortFactions(all.filter(f => isLandmark || !f.isCitywide));
+    const citywide = isLandmark ? [] : sortFactions(all.filter(f => f.isCitywide));
 
     const specSec = el("section", { cls: "section" });
     specSec.appendChild(el("h3", {
@@ -777,7 +828,7 @@
       app.appendChild(det);
     }
 
-    renderDistrictDetails(app, d);
+    if (d.kind !== "landmark") renderDistrictDetails(app, d);
   }
 
   function renderDistrictDetails(app, d) {

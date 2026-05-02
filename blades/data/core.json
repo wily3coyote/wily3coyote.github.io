@@ -209,7 +209,6 @@
       "summary": "A labor camp served by convicts and a ghetto for the destitute poor.",
       "description": "Dunslough is a ghetto for the destitute poor of the city, as well as the site of Ironhook Prison and its labor camp. Originally, the ghetto was a neighborhood for families of prisoners, but over the years, extreme poverty and neglect have worn it down into a sodden ruin. A vicious cycle plays out here: crime driven by desperation, then arrest, incarceration, and release back to Dunslough--giving Ironhook an endless supply of laborers to exploit.",
       "landmarks": [
-        { "name": "Ironhook Prison", "description": "A towering metal fortress, where the worst (or most unlucky) criminals are incarcerated. The poorest are forced to work at Dunvil Labor Camp. The most well-connected prisoners manage a comfortable stay, and may even continue to run their criminal enterprises from behind bars." },
         { "name": "Dunvil Labor Camp", "description": "Poor prisoners who can't afford to bribe the staff at Ironhook spend most of their days toiling at Dunvil Labor Camp, loading precious ores onto barges for the rail station and breaking the larger rocks hauled from the Mire." },
         { "name": "Dunslough Ghetto", "description": "The most destitute of the city end up in Dunslough, working the Mire for a pittance just to buy their daily bread. The city counts the space as \"runoff \" for the prison grounds, and does nothing to maintain it." },
         { "name": "The Mire", "description": "A massive mud-quarry pit, the Mire is the site of the impact of an ancient celestial body, which left behind a variety of precious ores and jewels embedded in the earth." }
@@ -309,6 +308,56 @@
       ],
       "special_rule": "Most engagement rolls suffer -2d due to heavy Bluecoat patrols. Operations against the nobility in Whitecrown are considered on \"hostile turf \" for the purpose of generating heat.",
       "indicators": { "wealth": 4, "safety": 4, "crime": 0, "occult": 2 }
+    },
+
+    {
+      "id": "deathlands",
+      "kind": "landmark",
+      "name": "The Deathlands",
+      "summary": "The wasteland beyond the lightning barriers.",
+      "description": "Beyond the lightning barriers, the world is a wasteland of petrified trees, ash, and choking clouds of miasma. Restless ghosts ceaselessly search for the faintest spark of life essence upon which to prey."
+    },
+    {
+      "id": "eeleries-and-farms",
+      "kind": "landmark",
+      "name": "Eeleries & Farms",
+      "summary": "Eel farms, mushroom caverns, and radiant-energy crops outside the city.",
+      "description": "About half of Doskvol's food needs are met by imports; the other half is gathered locally from eel farms, mushroom caverns, and crops nurtured by wondrous radiant energy lamps."
+    },
+    {
+      "id": "gaddoc-rail-station",
+      "kind": "landmark",
+      "name": "Gaddoc Rail Station",
+      "summary": "The city's central electro-rail terminus.",
+      "description": "Electro-rail trains from across the Imperium arrive here daily with goods and passengers."
+    },
+    {
+      "id": "ironhook",
+      "kind": "landmark",
+      "name": "Ironhook",
+      "summary": "The towering prison-fortress of Doskvol.",
+      "description": "A towering metal fortress, where the worst (or most unlucky) criminals are incarcerated. Many are forced into labor in the Southern fields and pit-mines of Dunslough. The condemned are sent to scavenge in the deathlands."
+    },
+    {
+      "id": "lost-district",
+      "kind": "landmark",
+      "name": "The Lost District",
+      "summary": "A once-wealthy area abandoned to the deathlands.",
+      "description": "A once wealthy area, ravaged by plague then abandoned to the deathlands when the second lightning barrier was built. Contains many lost treasures for the foolhardy to seek out."
+    },
+    {
+      "id": "old-north-port",
+      "kind": "landmark",
+      "name": "Old North Port",
+      "summary": "An obsolete port outside the lightning barrier.",
+      "description": "Before the deluge of the second century, the Dosk River delta was only a shallow bog surrounding a coal mining settlement. Ships used the Old North Port to dock and re-supply before crossing the open sea to Skovlan. The obsolete port was abandoned to the deathlands when the second lightning barrier was built."
+    },
+    {
+      "id": "void-sea",
+      "kind": "landmark",
+      "name": "The Void Sea",
+      "summary": "The black ocean surrounding Doskvol.",
+      "description": "During the cataclysm, the oceans turned to black ink. Tiny points of light, arrayed like constellations of stars, can be seen far below the surface. Only the bravest or most desperate of captains dare to sail beyond sight of land, into a sea as black and dark as the sky above. The vengeful ghosts that plague the land tend to shun the open ocean, but there are more terrible things prowling the deeps."
     }
   ],
 
@@ -339,7 +388,7 @@
       "name": "Bluecoats",
       "tier": 3,
       "hold": "strong",
-      "districts": ["*"],
+      "districts": ["*", "ironhook"],
       "tags": { "Institutions": 5, "Law": 5, "Muscle": 4, "Legal": 5, "Investigation": 2, "Modest": 2 },
       "allies": ["city-council", "the-billhooks", "the-crows", "ironhook-prison", "lord-scurlock", "the-unseen"],
       "enemies": ["imperial-military"],
@@ -623,7 +672,7 @@
       "name": "Deathlands Scavengers",
       "tier": 2,
       "hold": "weak",
-      "districts": [],
+      "districts": ["deathlands", "old-north-port", "lost-district"],
       "tags": { "Fringe": 5, "Criminal": 2, "Occult": 3, "Sorcery": 2, "Poor": 3, "Grey": 3, "Foreign": 2 },
       "allies": ["the-forgotten-gods", "gondoliers", "spirit-wardens"],
       "enemies": ["ironhook-prison"],
@@ -841,7 +890,7 @@
       "name": "Imperial Military",
       "tier": 6,
       "hold": "strong",
-      "districts": ["whitecrown", "charterhall"],
+      "districts": ["whitecrown", "gaddoc-rail-station", "void-sea"],
       "tags": { "Institutions": 5, "Military": 5, "Muscle": 5, "Rich": 4, "Legal": 5 },
       "allies": ["ministry-of-preservation", "the-silver-nails"],
       "enemies": ["bluecoats", "city-council", "the-grinders", "skovlander-refugees", "ulf-ironborn"],
@@ -883,7 +932,7 @@
       "name": "Ironhook Prison",
       "tier": 4,
       "hold": "strong",
-      "districts": ["dunslough"],
+      "districts": ["ironhook"],
       "tags": { "Institutions": 5, "Law": 4, "Criminal": 3, "Muscle": 3, "Legal": 4, "Grey": 3, "Modest": 2 },
       "allies": ["bluecoats", "the-lampblacks", "the-unseen"],
       "enemies": ["deathlands-scavengers"],
@@ -911,7 +960,7 @@
       "name": "Laborers",
       "tier": 3,
       "hold": "weak",
-      "districts": ["charhollow", "coalridge", "the-docks", "barrowcleft"],
+      "districts": ["charhollow", "coalridge", "the-docks", "barrowcleft", "eeleries-and-farms"],
       "tags": { "Labor & Trade": 5, "Labor": 5, "Industry": 3, "Poor": 3, "Legal": 4, "Modest": 1 },
       "allies": ["the-lost"],
       "enemies": [],
@@ -925,7 +974,7 @@
       "name": "The Lampblacks",
       "tier": 2,
       "hold": "weak",
-      "districts": ["crows-foot"],
+      "districts": ["crows-foot", "ironhook"],
       "tags": { "Underworld": 5, "Criminal": 5, "Vice": 4, "Drugs": 4, "Muscle": 4, "Illegal": 5, "Poor": 2, "Labor": 2 },
       "allies": ["the-fog-hounds", "gondoliers", "ironhook-prison"],
       "enemies": ["the-red-sashes", "bluecoats", "cabbies"],
@@ -949,7 +998,7 @@
       "name": "Leviathan Hunters",
       "tier": 5,
       "hold": "strong",
-      "districts": ["the-docks", "whitecrown"],
+      "districts": ["the-docks", "whitecrown", "void-sea"],
       "tags": { "Institutions": 5, "Noble": 4, "Industry": 4, "Occult": 2, "Rich": 5, "Legal": 5, "Sorcery": 2, "Spirit Trade": 2 },
       "allies": ["city-council", "the-church-of-ecstasy", "sailors", "dockers", "sparkwrights"],
       "enemies": ["the-grinders", "ministry-of-preservation", "the-path-of-echoes", "the-gray-cloaks"],
@@ -991,7 +1040,7 @@
       "name": "Ministry of Preservation",
       "tier": 5,
       "hold": "strong",
-      "districts": ["barrowcleft", "charterhall", "coalridge"],
+      "districts": ["barrowcleft", "charterhall", "coalridge", "eeleries-and-farms", "gaddoc-rail-station"],
       "tags": { "Institutions": 5, "Food": 5, "Transport": 5, "Politics": 4, "Rich": 5, "Legal": 5, "Noble": 2, "Muscle": 2 },
       "allies": ["the-billhooks", "imperial-military", "rail-jacks", "sparkwrights", "the-hive"],
       "enemies": ["leviathan-hunters", "city-council"],
@@ -1026,7 +1075,7 @@
       "name": "Rail Jacks",
       "tier": 2,
       "hold": "weak",
-      "districts": ["charterhall"],
+      "districts": ["gaddoc-rail-station"],
       "tags": { "Labor & Trade": 5, "Labor": 4, "Transport": 4, "Muscle": 4, "Legal": 4, "Modest": 2 },
       "allies": ["ministry-of-preservation"],
       "enemies": [],
@@ -1148,7 +1197,7 @@
       "name": "The Silver Nails",
       "tier": 3,
       "hold": "strong",
-      "districts": ["six-towers"],
+      "districts": ["six-towers", "lost-district"],
       "tags": { "Underworld": 5, "Foreign": 4, "Military": 3, "Muscle": 5, "Occult": 2, "Assassination": 3, "Modest": 3, "Grey": 3, "Sorcery": 2 },
       "allies": ["imperial-military", "sailors", "severosi-consulate"],
       "enemies": ["the-circle-of-flame", "the-grinders", "skovlan-consulate", "skovlander-refugees", "spirit-wardens"],
@@ -1217,7 +1266,7 @@
       "name": "Spirit Wardens",
       "tier": 4,
       "hold": "strong",
-      "districts": ["whitecrown", "charterhall"],
+      "districts": ["whitecrown", "charterhall", "lost-district"],
       "tags": { "Institutions": 5, "Law": 4, "Occult": 4, "Sorcery": 4, "Investigation": 4, "Muscle": 3, "Legal": 5, "Religious": 2, "Spirit Trade": 2 },
       "allies": ["the-church-of-ecstasy", "deathlands-scavengers"],
       "enemies": ["the-dimmer-sisters", "gondoliers", "lord-scurlock", "the-silver-nails", "the-unseen", "the-path-of-echoes", "the-reconciled", "the-horde"],
@@ -1259,7 +1308,7 @@
       "name": "The Unseen",
       "tier": 4,
       "hold": "strong",
-      "districts": ["*"],
+      "districts": ["*", "ironhook"],
       "tags": { "Underworld": 5, "Criminal": 5, "Occult": 3, "Vice": 3, "Information": 4, "Sorcery": 3, "Assassination": 3, "Politics": 4, "Rich": 3, "Illegal": 5 },
       "allies": ["bluecoats", "ironhook-prison", "the-forgotten-gods", "cyphers"],
       "enemies": ["ink-rakes", "the-hive", "spirit-wardens"],

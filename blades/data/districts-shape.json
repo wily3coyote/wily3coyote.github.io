@@ -283,6 +283,12 @@
       ]
     ]
   },
+  "deathlands": {
+    "point": [
+      843,
+      1497
+    ]
+  },
   "dunslough": {
     "points": [
       [
@@ -309,6 +315,30 @@
         711,
         1280
       ]
+    ]
+  },
+  "eeleries-and-farms": {
+    "point": [
+      505,
+      1384
+    ]
+  },
+  "gaddoc-rail-station": {
+    "point": [
+      828,
+      1216
+    ]
+  },
+  "ironhook": {
+    "point": [
+      475,
+      1130
+    ]
+  },
+  "lost-district": {
+    "point": [
+      836,
+      279
     ]
   },
   "nightmarket": {
@@ -353,6 +383,12 @@
         950,
         878
       ]
+    ]
+  },
+  "old-north-port": {
+    "point": [
+      141,
+      1400
     ]
   },
   "silkshore": {
@@ -525,6 +561,12 @@
         450,
         629
       ]
+    ]
+  },
+  "void-sea": {
+    "point": [
+      649,
+      87
     ]
   },
   "whitecrown": {
