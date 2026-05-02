@@ -1169,7 +1169,7 @@
       "name": "Servants",
       "tier": 2,
       "hold": "weak",
-      "districts": ["brightstone", "charterhall", "nightmarket", "six-towers", "whitecrown"],
+      "districts": ["brightstone", "charterhall", "six-towers", "whitecrown"],
       "tags": { "Labor & Trade": 5, "Labor": 4, "Information": 3, "Poor": 3, "Legal": 4, "Modest": 1 },
       "allies": [],
       "enemies": [],
